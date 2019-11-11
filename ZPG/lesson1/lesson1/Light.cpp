@@ -23,6 +23,7 @@ glm::vec4 Light::getLightColor()
 
 void Light::updatePosition(Shader* shader)
 {
+
 	this->angle += 0.1;
 	if (this->angle == 360) {
 		this->angle = 0;
@@ -30,7 +31,7 @@ void Light::updatePosition(Shader* shader)
 	float x = this->worldPoint.x + this->radius * cos(angle);
 	float y = this->worldPoint.y + this->radius * sin(angle);
 	float z = this->worldPoint.z + this->radius * sin(angle);
-	this->position = glm::vec3(x, 0, z);
+	this->position = glm::vec3(0, 0, 0);
 	shader->sendUniformVec3("lightPosition", this->position);
 }
 

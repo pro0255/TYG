@@ -14,6 +14,9 @@ private:
 public:
 	Window();
 	~Window();
+
+	void getResolution(int* width, int* height);
+
 	GLFWwindow* getWindow();
 };
 

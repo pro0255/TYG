@@ -53,7 +53,6 @@ public:
 
 	void processKeyMovement();
 
-
 	void pressMove(Movement type);
 	void mouseMove(float xOffSet, float yOffSet);
 	void scrollMove(float yOffSet);

@@ -8,17 +8,20 @@
 class Object
 {
 private:
+	static int GENERATE_ID;
 	//float *color;
+	int id;
 	Model* model;
 	glm::mat4 modelMatrix;
 	glm::vec4 color;
+
 public:
+
 
 	glm::mat4 getModelMatrix();
 	int getCountVertex();
-
 	void bind();
-
+	int getId();
 
 	glm::vec4 getObjectColor();
 	void rotateObject(float angle, glm::vec3 vector);

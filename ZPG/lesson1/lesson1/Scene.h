@@ -15,10 +15,11 @@ class Renderer;
 class Scene
 {
 private:
+
+
+
+
 	Object* o;
-
-
-
 	vector<Object*> my_monkeys;
 	vector<Object*> my_objects;
 	Object* plain;
@@ -36,8 +37,13 @@ private:
 public:
 	Scene(GLFWwindow* window);
 
+	void scaleObject();
+	void createObject(glm::vec3 pos);
+
 	Camera* getCamera();
-	void createObject();
+	void createObjects();
 	void draw();
+	void identify();
+	int selected_Object_Id;
 };
 

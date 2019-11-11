@@ -2,6 +2,10 @@
 #include <iostream>
 using namespace std;
 
+
+
+int Object::GENERATE_ID = 0;
+
 glm::mat4 Object::getModelMatrix()
 {
 	return this->modelMatrix;
@@ -17,7 +21,10 @@ void Object::bind()
 	glBindVertexArray(model->getVAO());
 }
 
-
+int Object::getId()
+{
+	return this->id;
+}
 
 glm::vec4 Object::getObjectColor()
 {
@@ -52,6 +59,7 @@ void Object::set_shader_properties(Shader* shader)
 
 Object::Object(Model* model)
 {
+	this->id = ++GENERATE_ID;
 	this->model = model;
 	this->color = glm::vec4(0.385, 0.647, 0.812, 1.0);
 	this->resetObject();
@@ -60,11 +68,11 @@ Object::Object(Model* model)
 
 Object::Object(Model* model, glm::vec4 color)
 {
+	this->id = ++GENERATE_ID;
 	this->model = model;
 	this->color = color;
 	this->resetObject();
 }
-
 
 Object::~Object()
 {

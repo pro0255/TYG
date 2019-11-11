@@ -112,6 +112,16 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 		//scene->getCamera()->keyMove(LEFT);
 		scene->getCamera()->pressMove(LEFT);
 	}
+	else if (key == GLFW_KEY_T && (action == GLFW_PRESS)) {
+		scene->scaleObject();
+	}
+	else if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+		glfwSetInputMode(instance->window->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	}
+	else if (key == GLFW_KEY_C && action == GLFW_RELEASE) {
+		glfwSetInputMode(instance->window->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 	//printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
 }
 
@@ -145,7 +155,52 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y)
 
 void Application::button_callback(GLFWwindow* window, int button, int action, int mode)
 {
-	if (action == GLFW_PRESS) printf("button_callback [%d,%d,%d]\n", button, action, mode);
+	if (action == GLFW_RELEASE) {
+		instance->scene->selected_Object_Id = -1;
+		cout << "released" << endl;
+	}
+
+
+	double _x = 0;
+	double _y = 0;
+
+	int height = 0;
+	int width = 0;
+	if (action == GLFW_PRESS) {
+
+		GLbyte color[4];
+		GLfloat depth;
+		GLuint index;
+
+		glfwGetCursorPos(this->window->getWindow(), &_x, &_y);
+		int x = _x;
+		int y = _y;
+		this->instance->window->getResolution(&width, &height);
+
+		int newy = height - y;
+
+		glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+		glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+		glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+		printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %d\n", x, y, color[0], color[1], color[2], color[3], depth, index);
+
+
+		glm::vec3 screenX = glm::vec3(x, newy, depth);
+		glm::mat4& view = instance->scene->getCamera()->viewMatrix;
+		glm::mat4& projection = instance->scene->getCamera()->projectionMatrix;
+
+
+		glm::vec4 viewPort = glm::vec4(0, 0, width, height);
+		glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
+
+		instance->scene->selected_Object_Id = index;
+		printf("unproject [%f, %f, %f]\n", pos.x, pos.y, pos.z);
+
+		if (button == 1) {
+			scene->createObject(pos);
+		}
+	}
 }
 
 void Application::scroll_callback(GLFWwindow* window, double x, double y)

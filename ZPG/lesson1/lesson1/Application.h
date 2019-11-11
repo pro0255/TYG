@@ -12,7 +12,6 @@ class Application
 {
 
 private:
-
 	static Application* instance;
 	Window* window;
 	Scene* scene;

@@ -34,8 +34,11 @@ void Window::init()
 	float ratio = width / (float)height;
 	glViewport(0, 0, width, height);
 
-	glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_STENCIL_TEST); //indentifikace objektu
+
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 	//vertex attribute object(VAO)
 	//lib nastavit cesty dll nakopirovat k exe
 }
@@ -47,6 +50,11 @@ Window::Window()
 
 Window::~Window()
 {
+}
+
+void Window::getResolution(int* width, int* height)
+{
+	glfwGetFramebufferSize(this->window, width, height);
 }
 
 GLFWwindow* Window::getWindow()
