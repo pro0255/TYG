@@ -137,6 +137,11 @@ void Shader::setUniform1f(const string& name, float value)
 	glUniform1f(glGetUniformLocation(this->shaderProgram, name.c_str()), value);
 }
 
+void Shader::setUniform1i(const string& name, int value)
+{
+	glUniform1i(glGetUniformLocation(this->shaderProgram, name.c_str()), value);
+}
+
 void Shader::sendUniformVec4(const GLchar* name, glm::vec4 data)
 {
 	GLint uniformID = glGetUniformLocation(this->shaderProgram, name);

@@ -46,6 +46,7 @@ public:
 
 	void setUniform4f(const string& name, float value);
 	void setUniform1f(const string& name, float value);
+	void setUniform1i(const string& name, int value);
 	void sendUniformVec4(const GLchar* name, glm::vec4 data);
 	void sendUniformVec3(const GLchar* name, glm::vec3 data);
 	void sendUniformMat4(const GLchar* name, glm::mat4 data);
