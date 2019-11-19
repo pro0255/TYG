@@ -6,7 +6,6 @@ void Model::createVBO()
 	this->VBO;
 	glGenBuffers(1, &this->VBO); // generate the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-	cout << sizeof(this->points) << endl;
 	glBufferData(GL_ARRAY_BUFFER, this->size, this->points, GL_STATIC_DRAW);
 	cout << "VBO created" << endl;
 }
@@ -18,12 +17,19 @@ void Model::createVAO()
 	glBindVertexArray(this->VAO);
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	//
+	glEnableVertexAttribArray(2); //UV
+	//
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid*)(3 * sizeof(float)));
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid*)0);
+	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (GLvoid*)(3 * sizeof(float)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (GLvoid*)0); //nove kdyztakpredelat
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (GLvoid*)(3 * sizeof(float))); //nove kdyztakpredelet
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (GLvoid*)(6 * sizeof(float))); //nove kdyztakpredelat
 	cout << "VAO created" << endl;
 }
+
 
 GLuint Model::getVAO()
 {

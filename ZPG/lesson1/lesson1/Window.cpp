@@ -37,6 +37,7 @@ void Window::init()
 	//glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST); //indentifikace objektu
+	glEnable(GL_TEXTURE_2D);
 
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 	//vertex attribute object(VAO)

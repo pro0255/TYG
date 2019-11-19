@@ -21,6 +21,7 @@ void Renderer::draw_object(Shader* shader, Object* object)
 	//shader->sendUniformVec4("objectColor", object->getObjectColor());
 	glStencilFunc(GL_ALWAYS, object->getId(), 0xFF);
 	object->set_shader_properties(shader);
+	//object->rotateObject(0.1, glm::vec3(1, 0, 1));
 	glDrawArrays(GL_TRIANGLES, 0, object->getCountVertex());
 
 }

@@ -1,4 +1,9 @@
 #version 330
+
+
+//TODO udelat funkce
+//ASIMP
+//Doresit textury
 out vec4 frag_colour;
 
 //in vec3 _lightPosition;
@@ -9,15 +14,15 @@ out vec4 frag_colour;
 in vec4 _lightPosition;
 in vec3 ex_worldNormal;
 in vec4 ex_worldPosition;
-
+in vec2 _uv;
 
 uniform vec4 lightColor;
 uniform vec4 objectColor;
 uniform vec4 viewPos;
+uniform sampler2D textureUnitId;
 
 
 void main () {
-
 	vec3 lightVector = vec3(_lightPosition - ex_worldPosition);
 	float dot_product = max(dot(normalize(lightVector), normalize(ex_worldNormal)),0.0);
 
@@ -29,7 +34,8 @@ void main () {
 
 	float spec = pow(max(dot(normalize(viewDir), reflectDir), 0.0), 32);
 	vec4 specular = spec * lightColor;
+	
 
-
-    frag_colour = ambient + diffuse + specular;
+    //frag_colour = ambient + diffuse + specular;
+	frag_colour = (ambient + diffuse + specular) * texture(textureUnitId, _uv);
 };

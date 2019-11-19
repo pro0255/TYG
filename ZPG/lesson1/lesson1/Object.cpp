@@ -19,6 +19,7 @@ int Object::getCountVertex()
 void Object::bind()
 {
 	glBindVertexArray(model->getVAO());
+	this->texture->bind(); //bind textury
 }
 
 int Object::getId()
@@ -55,6 +56,7 @@ void Object::set_shader_properties(Shader* shader)
 {
 	shader->sendUniformMat4("modelMatrix", this->modelMatrix);
 	shader->sendUniformVec4("objectColor", this->color);
+	texture->set_shader_properties(shader);
 }
 
 Object::Object(Model* model)
@@ -63,6 +65,7 @@ Object::Object(Model* model)
 	this->model = model;
 	this->color = glm::vec4(0.385, 0.647, 0.812, 1.0);
 	this->resetObject();
+	this->texture = new Texture();
 }
 
 

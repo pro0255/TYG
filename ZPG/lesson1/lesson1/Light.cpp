@@ -4,8 +4,6 @@ Light::Light(glm::vec3 position, glm::vec4 color)
 {
 	this->position = position;
 	this->color = color;
-
-
 	this->angle = 0;
 	this->radius = 5;
 	this->worldPoint = glm::vec3(0.0, 0.0, 0.0);
@@ -23,7 +21,6 @@ glm::vec4 Light::getLightColor()
 
 void Light::updatePosition(Shader* shader)
 {
-
 	this->angle += 0.1;
 	if (this->angle == 360) {
 		this->angle = 0;

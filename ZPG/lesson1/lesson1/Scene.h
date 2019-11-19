@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include <vector>
 #include "Light.h"
+#include "Texture.h"
 
 class Renderer;
 class Scene
@@ -22,7 +23,7 @@ private:
 	Object* o;
 	vector<Object*> my_monkeys;
 	vector<Object*> my_objects;
-	Object* plain;
+	//Object* plain;
 
 
 	GLFWwindow* window;
@@ -43,7 +44,6 @@ public:
 	Camera* getCamera();
 	void createObjects();
 	void draw();
-	void identify();
 	int selected_Object_Id;
 };
 

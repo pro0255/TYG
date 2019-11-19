@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include  "Model.h"
 #include "Shader.h"
+#include "Texture.h"
 class Object
 {
 private:
@@ -14,6 +15,7 @@ private:
 	Model* model;
 	glm::mat4 modelMatrix;
 	glm::vec4 color;
+	Texture* texture;
 
 public:
 

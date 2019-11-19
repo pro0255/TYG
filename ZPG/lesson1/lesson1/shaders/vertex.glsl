@@ -1,6 +1,7 @@
 #version 330
 layout(location=0) in vec3 position;
 layout(location=1) in vec3 normal;
+layout(location=2) in vec2 uv;
 uniform mat4 modelMatrix; //poslani matice dovnitr
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
@@ -8,7 +9,7 @@ uniform mat4 projectionMatrix;
 
 uniform vec3 lightPosition;
 
-
+out vec2 _uv;
 out vec4 _lightPosition;
 out vec4 ex_worldPosition;
 out vec3 ex_worldNormal;
@@ -20,7 +21,7 @@ void main () {
 	vec4 worldPos = modelMatrix * vec4(position, 1.0f);
 	vec3 normalPos = transpose(inverse(mat3(modelMatrix))) * normal;
 
-
+	_uv = uv;
 	ex_worldPosition = worldPos;
 	ex_worldNormal = normalPos;
 

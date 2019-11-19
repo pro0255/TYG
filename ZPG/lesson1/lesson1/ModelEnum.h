@@ -6,5 +6,6 @@ enum Model_Enum {
 	SUZI_FLAT,
 	SUZI_SMOOTH,
 	PLAIN,
+	TEXTURE_PLAIN,
 	NONE
 };

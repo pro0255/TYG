@@ -3,6 +3,7 @@
 #include "models/plain.h"
 #include "models/suzi_smooth.h";
 #include "models/suzi_flat.h"
+#include "models/texture_plain.h"
 
 
 float points_2[] = {
@@ -18,6 +19,7 @@ void ObjectFactory::createModels()
 	this->mp->insert({ TRIANGLE, new Model(points_2, sizeof(points_2)) });
 	this->mp->insert({ SPHERE, new Model(sphere, sizeof(sphere)) });
 	this->mp->insert({ PLAIN, new Model(plain, sizeof(plain)) });
+	this->mp->insert({ TEXTURE_PLAIN, new Model(texture_plain, sizeof(texture_plain)) });
 }
 
 Object* ObjectFactory::createObject(Model_Enum model_type)
