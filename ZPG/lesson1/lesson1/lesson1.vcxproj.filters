@@ -22,6 +22,9 @@
     <Filter Include="textures">
       <UniqueIdentifier>{a9a0a740-4195-42c9-b0ce-90fcd642ee51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assimpClass">
+      <UniqueIdentifier>{7278ce66-8e33-4630-8e24-ea6c25a2bebe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>assimpClass</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshEntry.cpp">
+      <Filter>assimpClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectAssimp.cpp">
+      <Filter>assimpClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +133,15 @@
     </ClInclude>
     <ClInclude Include="texture_plain.h">
       <Filter>models</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>assimpClass</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshEntry.h">
+      <Filter>assimpClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectAssimp.h">
+      <Filter>assimpClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

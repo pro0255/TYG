@@ -23,7 +23,11 @@ void Renderer::draw_object(Shader* shader, Object* object)
 	object->set_shader_properties(shader);
 	//object->rotateObject(0.1, glm::vec3(1, 0, 1));
 	glDrawArrays(GL_TRIANGLES, 0, object->getCountVertex());
+}
 
+void Renderer::draw_object(Shader* shader, ObjectAssimp* object) {
+	object->draw(shader);
+	glStencilFunc(GL_ALWAYS, object->id, 0xFF);
 }
 
 void Renderer::draw_scene(Scene* scene)

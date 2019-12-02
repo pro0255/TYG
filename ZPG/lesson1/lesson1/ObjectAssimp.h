@@ -6,30 +6,23 @@
 #include  "Model.h"
 #include "Shader.h"
 #include "Texture.h"
-class Object
+#include "Mesh.h"
+class ObjectAssimp
 {
 private:
 	static int GENERATE_ID;
-	//float *color;
-	int id;
-	Model* model;
+	Mesh* mesh;
 	glm::mat4 modelMatrix;
 	glm::vec4 color;
-	Texture* texture;
-
 public:
-	glm::mat4 getModelMatrix();
-	int getCountVertex();
-	void bind();
-	int getId();
-	glm::vec4 getObjectColor();
+	int id;
+	ObjectAssimp(Mesh* mesh);
+	ObjectAssimp(Mesh* mesh, glm::vec4 color);
 	void rotateObject(float angle, glm::vec3 vector);
 	void translateObject(glm::vec3 vector);
 	void scaleObject(glm::vec3 vector);
 	void resetObject();
 	void set_shader_properties(Shader* shader);
-	Object(Model* model);
-	Object(Model* model, glm::vec4 color);
-	~Object();
+	void draw(Shader* shader);
 };
 

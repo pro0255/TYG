@@ -11,26 +11,24 @@
 #include <vector>
 #include "Light.h"
 #include "Texture.h"
+#include "Mesh.h"
+#include "ObjectAssimp.h"
 
 class Renderer;
 class Scene
 {
 private:
-
-
-
-
-	Object* o;
+	vector<ObjectAssimp*> my_assimp_objects;
 	vector<Object*> my_monkeys;
 	vector<Object*> my_objects;
 	//Object* plain;
-
-
 	GLFWwindow* window;
 	ObjectFactory* factory;
 	Camera* camera;
 	Shader* shader;
 	Light* light;
+
+	Mesh* my_tmp;
 
 	void draw_objects();
 

@@ -20,6 +20,7 @@ void ObjectFactory::createModels()
 	this->mp->insert({ SPHERE, new Model(sphere, sizeof(sphere)) });
 	this->mp->insert({ PLAIN, new Model(plain, sizeof(plain)) });
 	this->mp->insert({ TEXTURE_PLAIN, new Model(texture_plain, sizeof(texture_plain)) });
+	printf("Factory created all models!\n");
 }
 
 Object* ObjectFactory::createObject(Model_Enum model_type)

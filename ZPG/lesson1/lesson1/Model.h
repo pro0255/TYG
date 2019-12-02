@@ -19,10 +19,8 @@ private:
 public:
 	void createVBO();
 	void createVAO();
-
 	GLuint getVAO();
 	int getCountVertex();
-
 	Model(const float* points, int size);
 	~Model();
 };

@@ -36,6 +36,7 @@ void Window::init()
 
 	//glfwSetInputMode(this->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
 	glEnable(GL_STENCIL_TEST); //indentifikace objektu
 	glEnable(GL_TEXTURE_2D);
 

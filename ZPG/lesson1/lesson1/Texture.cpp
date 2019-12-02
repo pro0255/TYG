@@ -26,5 +26,5 @@ void Texture::bind()
 
 void Texture::set_shader_properties(Shader* shader)
 {
-	shader->setUniform1i("textureUnitId", this->image);
+	shader->setUniform1i("textureUnitId", 0);
 }
