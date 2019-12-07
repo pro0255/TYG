@@ -31,8 +31,8 @@ MeshEntry::MeshEntry(const float* points, int size, int count_vertex)
 void MeshEntry::draw()
 {
 	glBindVertexArray(this->VAO);
-	if (size == -1) {
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	if (!this->isOld) {
+		glDrawElements(GL_TRIANGLES, this->count_vertex, GL_UNSIGNED_INT, 0);
 	}
 	else {
 		glDrawArrays(GL_TRIANGLES, 0, this->count_vertex);

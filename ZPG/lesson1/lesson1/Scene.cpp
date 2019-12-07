@@ -22,11 +22,11 @@ Scene::Scene(GLFWwindow* window)
 	this->light = new Light(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	this->light->set_shader_properties(this->shader);
 
-	this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
-	this->my_assimp_objects.at(0)->translateObject(glm::vec3(0, 0, 0));
-	
-	//this->my_tmp = new Mesh("./testModels/Models/test.obj");
-	//this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
+	//this->my_assimp_objects.at(0)->translateObject(glm::vec3(0, 0, 0));
+
+	this->my_tmp = new Mesh("./testModels/Models/test.obj");
+	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp));
 }
 
 void Scene::scaleObject()
