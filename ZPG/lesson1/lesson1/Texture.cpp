@@ -7,7 +7,7 @@ Texture::Texture(const char* path)
 	this->image = SOIL_load_OGL_texture(path, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 }
 
-Texture::Texture() : Texture("./textures/monkey.png")
+Texture::Texture() : Texture("./textures/test.png")
 {
 
 }

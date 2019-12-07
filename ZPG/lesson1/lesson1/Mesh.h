@@ -22,9 +22,8 @@ private:
 	void processNode(aiNode* node, const aiScene* scene);
 	MeshEntry processMesh(aiMesh* mesh, const aiScene* scene);
 public:
-	Mesh(const float* points, int size);
+	Mesh(const float* points, int size, int count_vertex);
 	Mesh(const char* path);
 	void draw(Shader* shader);
-
 };
 

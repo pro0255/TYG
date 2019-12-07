@@ -2,7 +2,6 @@
 #include "Application.h"
 
 
-
 const char* vertex_shader =
 "#version 330\n"
 "layout(location=0) in vec3 position;"
@@ -22,13 +21,6 @@ const char* fragment_shader =
 "     frag_colour = ourColor;"
 "}";
 
-
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
-{
-	if (!this->createShader(vertexPath, fragmentPath)) {
-		throw "Program Shader Failed Compiled";
-	}
-}
 
 Shader::Shader()
 {
@@ -62,6 +54,12 @@ bool Shader::createShader(const char* vertexCode, const char* fragmentCode)
 	return true;
 }
 
+Shader::Shader(const char* vertexPath, const char* fragmentPath)
+{
+	if (!this->createShader(vertexPath, fragmentPath)) {
+		throw "Program Shader Failed Compiled";
+	}
+}
 bool Shader::createShader()
 {
 	if (this->createShader(vertex_shader, fragment_shader)) return true;
@@ -150,7 +148,6 @@ void Shader::sendUniformVec4(const GLchar* name, glm::vec4 data)
 	}
 	else {
 		cout << "In shader does not exist uniform value with this value or is not used.." << endl;
-
 	}
 }
 

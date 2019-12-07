@@ -24,14 +24,21 @@ class MeshEntry
 {
 public:
 	MeshEntry(vector<Vertex> vectices, vector<unsigned int> indices, vector<Textures> textures);
+	MeshEntry(const float* points, int size, int count_vertex);
 	void draw();
 	vector<Vertex> verticies;
 	vector<unsigned int> indices;
 	vector<Textures> textures;
 	unsigned int VAO;
+	const float* points;
+	int size;
+	int count_vertex;
 
 private:
 	unsigned int VBO, EBO;
 	void setupMeshEntry();
+	void setupMesh(vector<Vertex> vectices, vector<unsigned int> indices, vector<Textures> textures);
+	void setupMesh(const float* points, int size, int count_vertex);
+	bool isOld;
 };
 

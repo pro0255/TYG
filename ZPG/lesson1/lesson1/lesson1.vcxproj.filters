@@ -131,9 +131,6 @@
     <ClInclude Include="Texture.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
-    <ClInclude Include="texture_plain.h">
-      <Filter>models</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>assimpClass</Filter>
     </ClInclude>
@@ -142,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="ObjectAssimp.h">
       <Filter>assimpClass</Filter>
+    </ClInclude>
+    <ClInclude Include="models\texture_plain.h">
+      <Filter>models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

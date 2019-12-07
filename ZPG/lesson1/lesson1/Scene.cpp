@@ -1,8 +1,14 @@
 #include "Scene.h"
+#include "models/texture_plain.h"
+#include "models/sphere.h"
+#include "models/suzi_smooth.h"
 
 //TODO:
 //SHADER FUNKCE!
 //zdedit z tridy a program id pak tam zustane a nebude viditelny ven
+//ask old objects
+//texture plain does not have light
+
 
 Scene::Scene(GLFWwindow* window)
 {
@@ -13,10 +19,14 @@ Scene::Scene(GLFWwindow* window)
 	this->shader->subscribeCamera(this->camera);
 	this->camera->setShader(this->shader);
 	this->shader->use();
-	this->light = new Light(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
+	this->light = new Light(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	this->light->set_shader_properties(this->shader);
-	this->my_tmp = new Mesh("./testModels/Models/test.obj");
-	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp));
+
+	this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
+	this->my_assimp_objects.at(0)->translateObject(glm::vec3(0, 0, 0));
+	
+	//this->my_tmp = new Mesh("./testModels/Models/test.obj");
+	//this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp));
 }
 
 void Scene::scaleObject()
@@ -54,9 +64,13 @@ void Scene::createObjects()
 	this->plain->translateObject(glm::vec3(0.0, -20, 0));
 	this->plain->scaleObject(glm::vec3(100));
 	*/
+
+
 	/*
 	this->my_objects.push_back(this->factory->createObject(TEXTURE_PLAIN));
 	this->my_objects.at(0)->translateObject(glm::vec3(2.0f, 0.0f, 0.0f));
+	*/
+	/*
 	this->my_objects.push_back(this->factory->createObject(TEXTURE_PLAIN));
 	this->my_objects.at(1)->translateObject(glm::vec3(-2.0f, 0.0f, 0.0f));
 

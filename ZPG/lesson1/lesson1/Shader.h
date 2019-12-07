@@ -11,20 +11,12 @@
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
 #include "Camera.h"
 #include "ShaderLoader.h"
-//object, shader, aplikace, scena, window
-
-//object v sobe udrzuje 
-//shader v sobe ma logiku vykreslovaci retezce a zaroven se stara o nastanovani uniformu
-//aplikace v sobe ma vsechn
-//scena ma v sobe vykreslovaci logiku, object kameru..
-//SHADER ma ID shaderu, a  tohle cislo nesmi opustit class shader
 
 using namespace std;
 
 class Camera;
 class Shader : ShaderLoader
 {
-
 private:
 
 	Camera* camera;
@@ -36,13 +28,10 @@ private:
 public:
 	Shader(const char* vertexPath, const char* fragmentPath);
 	Shader();
-
-
 	~Shader();
 	void use();
 	void updateCamera();
 	void subscribeCamera(Camera* camera);
-
 
 	void setUniform4f(const string& name, float value);
 	void setUniform1f(const string& name, float value);

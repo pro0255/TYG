@@ -1,5 +1,10 @@
 #include "Mesh.h"
 
+Mesh::Mesh(const float* points, int size, int count_vertex)
+{
+	this->meshes.push_back(MeshEntry(points, size, count_vertex));
+}
+
 Mesh::Mesh(const char* path)
 {
 	this->loadMesh(path);
@@ -7,7 +12,6 @@ Mesh::Mesh(const char* path)
 
 void Mesh::draw(Shader* shader) //vykresleni jednotivych modelu ve velkem meshi
 {
-
 	for (unsigned int i = 0; i < this->meshes.size(); i++) {
 		meshes.at(i).draw();
 	}

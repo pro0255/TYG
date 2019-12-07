@@ -14,7 +14,9 @@ private:
 	Mesh* mesh;
 	glm::mat4 modelMatrix;
 	glm::vec4 color;
+
 public:
+	Texture* texture;
 	int id;
 	ObjectAssimp(Mesh* mesh);
 	ObjectAssimp(Mesh* mesh, glm::vec4 color);
