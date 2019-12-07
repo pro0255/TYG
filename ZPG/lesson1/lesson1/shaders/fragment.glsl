@@ -20,7 +20,7 @@ struct Light {
 
 
 
-in vec4 _lightPosition; //pozice svetla
+//in vec4 _lightPosition; //pozice svetla
 in vec3 ex_worldNormal;	//normala pro fragment
 in vec4 ex_worldPosition;	//pozice
 in vec2 _uv;	//uv souradnice pro sparvne texturovani
@@ -28,7 +28,7 @@ in vec2 _uv;	//uv souradnice pro sparvne texturovani
 
 
 
-uniform vec4 lightColor; //barva svetla
+//uniform vec4 lightColor; //barva svetla
 uniform vec4 objectColor; //barva objektu
 
 
@@ -46,26 +46,23 @@ out vec4 frag_colour;
 
 
 vec4 calcAmbient(vec4 objectColor);
-vec4 calcLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec4 calcLight(Light light, vec3 normal, vec4 fragPos, vec4 viewPos, vec4 objectColor);
 
 void main () {
-	vec3 lightVector = vec3(_lightPosition - ex_worldPosition);
-	float dot_product = max(dot(normalize(lightVector), normalize(ex_worldNormal)),0.0);
 
-	vec4 diffuse = dot_product * objectColor;
-	vec4 ambient = calcAmbient(objectColor);
+	vec4 objTexture = texture(textureUnitId, _uv);
+	vec4 objColor = objectColor;
 
-	vec3 viewDir = vec3(viewPos - ex_worldPosition);
-	vec3 reflectDir = reflect(normalize(-lightVector), normalize(ex_worldNormal));
-
-	float spec = pow(max(dot(normalize(viewDir), reflectDir), 0.0), 32);
-	vec4 specular = spec * lightColor;
-
-	//frag_colour = (ambient + diffuse + specular);
-	frag_colour = (ambient + diffuse + specular);
 	if(hasObjectTexture) {
-		frag_colour *= texture(textureUnitId, _uv);
+		objColor *= objTexture;
 	}
+
+	vec4 finalLight = calcAmbient(objectColor);
+	for(int i = 0; i < lightsCount; i++) {
+		finalLight += calcLight(lights[i], ex_worldNormal, ex_worldPosition, viewPos, objectColor);
+	}
+
+	frag_colour = objColor * finalLight;
 };
 
 

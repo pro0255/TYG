@@ -7,17 +7,17 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
 
-uniform vec3 lightPosition;
+//uniform vec3 lightPosition;
 
 out vec2 _uv;
-out vec4 _lightPosition;
+//out vec4 _lightPosition;
 out vec4 ex_worldPosition;
 out vec3 ex_worldNormal;
 
 
 void main () {
 	gl_Position = (projectionMatrix*viewMatrix*modelMatrix) * vec4(position, 1.0);
-	_lightPosition = vec4(lightPosition, 1.0f);
+	//_lightPosition = vec4(lightPosition, 1.0f);
 	vec4 worldPos = modelMatrix * vec4(position, 1.0f);
 	vec3 normalPos = transpose(inverse(mat3(modelMatrix))) * normal;
 

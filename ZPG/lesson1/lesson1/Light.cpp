@@ -49,7 +49,7 @@ void Light::set_shader_properties(Shader* shader)
 
 void Light::setShaderProperties(Shader* shader, int index)
 {
-	shader->use(); //pouziti prave aktualniho shaderu
+	//shader->use(); //pouziti prave aktualniho shaderu
 	string prefix = "lights[" + std::to_string(index) + "].";
 	shader->sendUniformVec4((prefix + "position").c_str(), glm::vec4(this->position, 1));
 	shader->sendUniformVec4((prefix + "diffuse").c_str(), glm::vec4(this->diffuseColor, 1));

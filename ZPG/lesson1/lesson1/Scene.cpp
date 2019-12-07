@@ -21,12 +21,12 @@ Scene::Scene(GLFWwindow* window)
 	this->camera = new Camera();
 	this->shader->subscribeCamera(this->camera);
 	this->camera->setShader(this->shader);
-	this->shader->use();
-	this->light = new Light(glm::vec3(10.0f, 10.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
-	this->light->set_shader_properties(this->shader);
+	//this->light = new Light(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
+	//this->light->set_shader_properties(this->shader);
 
 
 	this->createLights(); //vytvoreni svetel
+	this->drawLights(); //nasetovani svetel
 
 	this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
 	this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
@@ -86,21 +86,25 @@ void Scene::createObjects()
 //Vytvoreni svetel
 void Scene::createLights()
 {
-	this->lights.push_back(new Light(glm::vec3(10, 0, 0), glm::vec3(1, 0, 0)));
-	this->lights.push_back(new Light(glm::vec3(-10, 0, 0), glm::vec3(0, 1, 0)));
+	this->lights.push_back(new Light(glm::vec3(10, 10, 10), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)));
+	this->lights.push_back(new Light(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(1, 0, 0)));
 }
 
 
 //Nastaveni svetel do sceny
 void Scene::drawLights()
 {
+	shader->use();
+	shader->setUniform1i("lightsCount", this->lights.size());
 	for (unsigned int i = 0; i < this->lights.size(); i++) {
-		light->setShaderProperties(this->shader, i);
+		this->lights[i]->setShaderProperties(shader, i);
 	}
 }
 
 void Scene::draw_objects()
 {
+
+
 	for (int i = 0; i < this->my_assimp_objects.size(); i++)
 	{
 		Renderer::draw_object(shader, this->my_assimp_objects.at(i));
@@ -119,7 +123,7 @@ void Scene::draw()
 
 			this->camera->processKeyMovement();
 			this->shader->sendUniformVec3("viewPos", this->camera->getEye());
-			this->light->updatePosition(this->shader);
+			//this->light->updatePosition(this->shader);
 			this->draw_objects();
 
 			glClearColor(0.f, 0.0f, 0.3f, 1.0f);
