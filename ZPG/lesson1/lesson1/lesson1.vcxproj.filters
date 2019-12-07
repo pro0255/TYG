@@ -25,6 +25,33 @@
     <Filter Include="assimpClass">
       <UniqueIdentifier>{7278ce66-8e33-4630-8e24-ea6c25a2bebe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factories">
+      <UniqueIdentifier>{4a1cc1a4-57a9-4412-9bf3-5d75c309b084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\ColorFactory">
+      <UniqueIdentifier>{7ecc856d-155c-4719-93db-9adcad3bec18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\ModelFactory">
+      <UniqueIdentifier>{e28c1f43-0fa6-479e-b697-7e8b4d0195dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\Assimp">
+      <UniqueIdentifier>{06ed51af-e714-4a07-bf6d-dd38bce4351b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\SkyBox">
+      <UniqueIdentifier>{a5a5e711-6d4e-4172-b8bb-f6f1d70bb75a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\OldModels">
+      <UniqueIdentifier>{37648527-58d6-4bf7-bf8b-83880dee3cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models\OldModelsUv">
+      <UniqueIdentifier>{815dc92f-409c-46fa-b8d3-27e67cbc09fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\SkyBox">
+      <UniqueIdentifier>{7c19f4c0-f741-4e20-82c1-0a4395c3b9bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\Classic">
+      <UniqueIdentifier>{f543987d-a15a-4cbd-a2ad-20b98f0cbf94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="ObjectAssimp.cpp">
       <Filter>assimpClass</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Zdrojové soubory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,14 +173,23 @@
     <ClInclude Include="models\texture_plain.h">
       <Filter>models</Filter>
     </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="shaders\fragment.glsl">
-      <Filter>shaders</Filter>
+      <Filter>shaders\Classic</Filter>
     </None>
     <None Include="shaders\vertex.glsl">
-      <Filter>shaders</Filter>
+      <Filter>shaders\Classic</Filter>
     </None>
-    <None Include="packages.config" />
+    <None Include="shaders\SkyBox\skybox_fragment.glsl">
+      <Filter>shaders\SkyBox</Filter>
+    </None>
+    <None Include="shaders\SkyBox\skybox_vertex.glsl">
+      <Filter>shaders\SkyBox</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -28,20 +28,37 @@ Scene::Scene(GLFWwindow* window)
 	this->createLights(); //vytvoreni svetel
 	this->drawLights(); //nasetovani svetel
 
-	this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
-	this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
+	//this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
 
 	Texture* house_texture = new Texture("./textures/test.png");
 	Texture* monkey = new Texture("./textures/monkey.png");
 
+	Mesh* house = new Mesh("./models/Assimp/test.obj");
+	Mesh* cube = new Mesh("./models/Assimp/cube.obj");
+	Mesh* skybox_model = new Mesh("./models/SkyBox/skybox.obj");
 
-	this->my_tmp = new Mesh("./testModels/Models/test.obj");
-	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp, house_texture));
+	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/");
+	this->skybox->translateObject(this->camera->getEye());
+	this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
+	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	//this->my_assimp_objects.at(1)->translateObject(glm::vec3(20.0, 0, 0));
+	//this->my_assimp_objects.push_back(this->skybox);
 
-	this->my_tmp = new Mesh("./testModels/Models/test.obj");
-	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp, monkey));
-	this->my_assimp_objects.at(2)->translateObject(glm::vec3(20.0, 0, 0));
-	//this->my_assimp_objects.push_back(new ObjectAssimp());
+	//auto tmp = new ObjectAssimp(skybox_model, this->skybox->cubemap);
+	//tmp->translateObject(this->camera->getEye());
+	//this->my_assimp_objects.push_back(tmp);
+
+
+
+	//Init of lamps to drawable vector object
+	for (unsigned int i = 0; i < this->lights.size(); i++) {
+		auto* lamp = new ObjectAssimp(skybox_model, glm::vec4(1, 1, 1, 1));
+		lamp->translateObject(lights[i]->getLightPosition());
+		lamp->scaleObject(glm::vec3(0.2f));
+		this->my_assimp_objects.push_back(lamp);
+	}
+
 }
 
 
@@ -95,6 +112,7 @@ void Scene::createLights()
 void Scene::drawLights()
 {
 	shader->use();
+
 	shader->setUniform1i("lightsCount", this->lights.size());
 	for (unsigned int i = 0; i < this->lights.size(); i++) {
 		this->lights[i]->setShaderProperties(shader, i);
@@ -104,10 +122,10 @@ void Scene::drawLights()
 void Scene::draw_objects()
 {
 
-
+	this->skybox->draw();
 	for (int i = 0; i < this->my_assimp_objects.size(); i++)
 	{
-		Renderer::draw_object(shader, this->my_assimp_objects.at(i));
+		Renderer::draw_object(this->shader, this->my_assimp_objects.at(i));
 	}
 }
 

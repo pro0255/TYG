@@ -22,15 +22,27 @@ const char* fragment_shader =
 "}";
 
 
-Shader::Shader()
+Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
-	this->shaderProgram = this->loadShader("./shaders/vertex.glsl", "./shaders/fragment.glsl");
+	this->shaderProgram = this->loadShader(vertexPath, fragmentPath);
+	cout << " Tady jsem spravne vytvoril shader " << endl;
+	/*
+	if (!this->createShader(vertexPath, fragmentPath)) {
+		throw "Program Shader Failed Compiled";
+	}
+	*/
+}
+
+
+Shader::Shader() : Shader("./shaders/vertex.glsl", "./shaders/fragment.glsl")
+{
+	//this->shaderProgram = this->loadShader("./shaders/vertex.glsl", "./shaders/fragment.glsl");
 	/*
 	if (!this->createShader()) {
 		throw "Program Shader Failed Compiled";
 	}
 	*/
-	cout << " Tady jsem spravne vytvoril shader " << endl;
+	//cout << " Tady jsem spravne vytvoril shader " << endl;
 }
 
 bool Shader::createShader(const char* vertexCode, const char* fragmentCode)
@@ -54,12 +66,7 @@ bool Shader::createShader(const char* vertexCode, const char* fragmentCode)
 	return true;
 }
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
-{
-	if (!this->createShader(vertexPath, fragmentPath)) {
-		throw "Program Shader Failed Compiled";
-	}
-}
+
 bool Shader::createShader()
 {
 	if (this->createShader(vertex_shader, fragment_shader)) return true;

@@ -13,6 +13,8 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "ObjectAssimp.h"
+#include "SkyBox.h"
+
 
 class Renderer;
 class Scene
@@ -28,6 +30,7 @@ private:
 	Shader* shader;
 	Light* light;
 
+	SkyBox* skybox;
 	vector<Light*> lights;
 
 	Mesh* my_tmp;

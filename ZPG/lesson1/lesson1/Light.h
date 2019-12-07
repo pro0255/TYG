@@ -9,12 +9,14 @@ private:
 	float radius;
 	float angle;
 
-	glm::vec3 position;
+
 	glm::vec4 color;
 	glm::vec3 worldPoint;
 
 
 	//Fragment struct properties;
+	glm::vec3 position;
+
 	glm::vec3 diffuseColor;
 	glm::vec3 specularColor;
 	glm::vec3 ambientColor;
