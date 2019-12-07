@@ -5,13 +5,12 @@
 class Texture
 {
 private:
-	GLuint image;
+	static unsigned int COUNTER;
+	GLuint id;
 public:
 
 	Texture(const char* path);
 	Texture();
-	void createTexture();
-	void bind();
 	void set_shader_properties(Shader* shader);
 };
 

@@ -19,7 +19,7 @@ int Object::getCountVertex()
 void Object::bind()
 {
 	glBindVertexArray(model->getVAO());
-	this->texture->bind(); //bind textury
+	//this->texture->bind(); //bind textury
 }
 
 int Object::getId()

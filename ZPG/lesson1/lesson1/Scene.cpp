@@ -26,12 +26,14 @@ Scene::Scene(GLFWwindow* window)
 	this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
 
 	Texture* house_texture = new Texture("./textures/test.png");
+	Texture* monkey = new Texture("./textures/monkey.png");
+
 
 	this->my_tmp = new Mesh("./testModels/Models/test.obj");
 	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp, house_texture));
 
 	this->my_tmp = new Mesh("./testModels/Models/test.obj");
-	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp));
+	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp, monkey));
 	this->my_assimp_objects.at(2)->translateObject(glm::vec3(20.0, 0, 0));
 	//this->my_assimp_objects.push_back(new ObjectAssimp());
 
