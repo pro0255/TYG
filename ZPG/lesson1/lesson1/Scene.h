@@ -28,6 +28,8 @@ private:
 	Shader* shader;
 	Light* light;
 
+	vector<Light*> lights;
+
 	Mesh* my_tmp;
 
 	void draw_objects();
@@ -41,6 +43,9 @@ public:
 
 	Camera* getCamera();
 	void createObjects();
+
+	void createLights();
+	void drawLights();
 	void draw();
 	int selected_Object_Id;
 };

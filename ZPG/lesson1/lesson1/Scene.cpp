@@ -12,6 +12,9 @@
 
 Scene::Scene(GLFWwindow* window)
 {
+
+
+
 	this->window = window;
 	this->factory = new ObjectFactory();
 	this->shader = new Shader();
@@ -21,6 +24,9 @@ Scene::Scene(GLFWwindow* window)
 	this->shader->use();
 	this->light = new Light(glm::vec3(10.0f, 10.0f, 0.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
 	this->light->set_shader_properties(this->shader);
+
+
+	this->createLights(); //vytvoreni svetel
 
 	this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
 	this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
@@ -36,8 +42,13 @@ Scene::Scene(GLFWwindow* window)
 	this->my_assimp_objects.push_back(new ObjectAssimp(this->my_tmp, monkey));
 	this->my_assimp_objects.at(2)->translateObject(glm::vec3(20.0, 0, 0));
 	//this->my_assimp_objects.push_back(new ObjectAssimp());
-
 }
+
+
+
+
+
+
 
 void Scene::scaleObject()
 {
@@ -69,42 +80,27 @@ Camera* Scene::getCamera()
 
 void Scene::createObjects()
 {
-	/* //podlaha
-	this->plain = this->factory->createObject(PLAIN, glm::vec4(0.0, 1.0, 0.0, 1.0));
-	this->plain->translateObject(glm::vec3(0.0, -20, 0));
-	this->plain->scaleObject(glm::vec3(100));
-	*/
+}
 
 
-	/*
-	this->my_objects.push_back(this->factory->createObject(TEXTURE_PLAIN));
-	this->my_objects.at(0)->translateObject(glm::vec3(2.0f, 0.0f, 0.0f));
-	*/
-	/*
-	this->my_objects.push_back(this->factory->createObject(TEXTURE_PLAIN));
-	this->my_objects.at(1)->translateObject(glm::vec3(-2.0f, 0.0f, 0.0f));
+//Vytvoreni svetel
+void Scene::createLights()
+{
+	this->lights.push_back(new Light(glm::vec3(10, 0, 0), glm::vec3(1, 0, 0)));
+	this->lights.push_back(new Light(glm::vec3(-10, 0, 0), glm::vec3(0, 1, 0)));
+}
 
-	this->my_objects.push_back(this->factory->createObject(TEXTURE_PLAIN));
-	this->my_objects.at(2)->translateObject(glm::vec3(0.0f, 2.0f, 0.0f));
-	this->my_objects.at(2)->rotateObject(180, glm::vec3(0, 0, 1));
-	this->my_objects.push_back(this->factory->createObject(TEXTURE_PLAIN));
-	this->my_objects.at(3)->translateObject(glm::vec3(0.0f, -2.0f, 0.0f));
-	*/
+
+//Nastaveni svetel do sceny
+void Scene::drawLights()
+{
+	for (unsigned int i = 0; i < this->lights.size(); i++) {
+		light->setShaderProperties(this->shader, i);
+	}
 }
 
 void Scene::draw_objects()
 {
-	//Renderer::draw_object(this->shader, this->plain);
-
-	for (int i = 0; i < this->my_objects.size(); i++) {
-		Renderer::draw_object(this->shader, this->my_objects.at(i));
-	}
-
-	/*
-	for (int i = 0; i < this->my_monkeys.size(); i++) {
-		Renderer::draw_object(this->shader, this->my_monkeys.at(i));
-	}
-	*/
 	for (int i = 0; i < this->my_assimp_objects.size(); i++)
 	{
 		Renderer::draw_object(shader, this->my_assimp_objects.at(i));
@@ -119,12 +115,14 @@ void Scene::draw()
 		//float rotation = 0.1f;
 		while (!glfwWindowShouldClose(this->window))
 		{
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 			this->camera->processKeyMovement();
 			this->shader->sendUniformVec3("viewPos", this->camera->getEye());
 			this->light->updatePosition(this->shader);
-			glClearColor(0.f, 0.0f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			this->draw_objects();
+
+			glClearColor(0.f, 0.0f, 0.3f, 1.0f);
 			glfwPollEvents();
 			glfwSwapBuffers(this->window);
 		}
