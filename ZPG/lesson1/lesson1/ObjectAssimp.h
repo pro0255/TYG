@@ -18,13 +18,17 @@ private:
 public:
 	Texture* texture;
 	int id;
+
 	ObjectAssimp(Mesh* mesh);
 	ObjectAssimp(Mesh* mesh, glm::vec4 color);
+	ObjectAssimp(Mesh* mesh, Texture* texture);
+
+	void set_shader_properties(Shader* shader);
+	void draw(Shader* shader);
+
 	void rotateObject(float angle, glm::vec3 vector);
 	void translateObject(glm::vec3 vector);
 	void scaleObject(glm::vec3 vector);
 	void resetObject();
-	void set_shader_properties(Shader* shader);
-	void draw(Shader* shader);
 };
 

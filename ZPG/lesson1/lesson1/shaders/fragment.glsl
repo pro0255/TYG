@@ -6,11 +6,6 @@
 //Doresit textury
 out vec4 frag_colour;
 
-//in vec3 _lightPosition;
-//in vec3 ex_worldNormal;
-//in vec3 ex_worldPosition;
-
-
 in vec4 _lightPosition;
 in vec3 ex_worldNormal;
 in vec4 ex_worldPosition;
@@ -19,6 +14,11 @@ in vec2 _uv;
 uniform vec4 lightColor;
 uniform vec4 objectColor;
 uniform vec4 viewPos;
+
+
+
+
+uniform bool hasObjectTexture;
 uniform sampler2D textureUnitId;
 
 
@@ -35,6 +35,9 @@ void main () {
 	float spec = pow(max(dot(normalize(viewDir), reflectDir), 0.0), 32);
 	vec4 specular = spec * lightColor;
 
+	//frag_colour = (ambient + diffuse + specular);
 	frag_colour = (ambient + diffuse + specular);
-    //frag_colour = (ambient + diffuse + specular) * texture(textureUnitId, _uv);
+	if(hasObjectTexture) {
+		frag_colour *= texture(textureUnitId, _uv);
+	}
 };
