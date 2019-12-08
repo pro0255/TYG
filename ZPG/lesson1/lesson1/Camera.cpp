@@ -59,7 +59,13 @@ void Camera::updateVectors()
 
 void Camera::notify()
 {
+	this->updateVectors();
+	for (auto _shader : this->shaders) {
+		_shader->updateCamera();
+	}
 
+
+	/*
 	if (this->shader != nullptr) {
 		this->updateVectors();
 		this->shader->updateCamera();
@@ -67,12 +73,19 @@ void Camera::notify()
 	else {
 		cout << "I have on camera NULLPTR !!!";
 	}
+	*/
 }
 
 void Camera::setShader(Shader* shader)
 {
 	this->shader = shader;
 	cout << "Setting shader and after i will notify him with my start parameters" << endl;
+	this->notify();
+}
+
+void Camera::registerObserver(Shader* shader)
+{
+	this->shaders.push_back(shader);
 	this->notify();
 }
 

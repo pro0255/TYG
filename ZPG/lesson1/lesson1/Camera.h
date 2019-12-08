@@ -6,6 +6,9 @@
 #include <glm/gtc/type_ptr.hpp> // glm::value_ptr
 #include "Shader.h"
 #include "MovementEnum.h"
+#include <vector>
+
+using namespace std;
 //priste za tridy applikace, renderer, shader, object, model, camera, window, 
 //renderer dostane scenu a tu vyrendruje
 class Shader;
@@ -37,6 +40,9 @@ private:
 
 	Shader* shader;
 
+	vector<Shader*> shaders;
+
+
 	void toFront();
 	void toRight();
 	void toLeft();
@@ -49,6 +55,7 @@ public:
 
 	void notify();
 	void setShader(Shader* shader);
+	void registerObserver(Shader* shader);
 
 
 	void processKeyMovement();

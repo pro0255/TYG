@@ -20,9 +20,8 @@ Scene::Scene(GLFWwindow* window)
 	this->shader = new Shader();
 	this->camera = new Camera();
 	this->shader->subscribeCamera(this->camera);
-	this->camera->setShader(this->shader);
-	//this->light = new Light(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec4(1.0, 1.0, 1.0, 1.0));
-	//this->light->set_shader_properties(this->shader);
+	//this->camera->setShader(this->shader);
+	this->camera->registerObserver(this->shader);
 
 
 	this->createLights(); //vytvoreni svetel
@@ -38,13 +37,14 @@ Scene::Scene(GLFWwindow* window)
 	Mesh* cube = new Mesh("./models/Assimp/cube.obj");
 	Mesh* skybox_model = new Mesh("./models/SkyBox/skybox.obj");
 
-	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/");
+	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
 	this->skybox->translateObject(this->camera->getEye());
-	this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
-	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 	//this->my_assimp_objects.at(1)->translateObject(glm::vec3(20.0, 0, 0));
-	//this->my_assimp_objects.push_back(this->skybox);
 
+	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	this->my_assimp_objects.at(0)->scaleObject(glm::vec3(0.2));
 	//auto tmp = new ObjectAssimp(skybox_model, this->skybox->cubemap);
 	//tmp->translateObject(this->camera->getEye());
 	//this->my_assimp_objects.push_back(tmp);
@@ -121,20 +121,19 @@ void Scene::drawLights()
 
 void Scene::draw_objects()
 {
-
 	this->skybox->draw();
 	for (int i = 0; i < this->my_assimp_objects.size(); i++)
 	{
-		Renderer::draw_object(this->shader, this->my_assimp_objects.at(i));
+		Renderer::draw_object(this->skybox->shader, this->my_assimp_objects.at(i)); //wtf is happening here this->skybox->shader
 	}
+
+	//glUseProgram(0);
 }
 
 
 void Scene::draw()
 {
 	try {
-		glm::mat4 M = glm::mat4(1.0f);
-		//float rotation = 0.1f;
 		while (!glfwWindowShouldClose(this->window))
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -144,7 +143,7 @@ void Scene::draw()
 			//this->light->updatePosition(this->shader);
 			this->draw_objects();
 
-			glClearColor(0.f, 0.0f, 0.3f, 1.0f);
+			//glClearColor(0.f, 0.0f, 0.3f, 1.0f);
 			glfwPollEvents();
 			glfwSwapBuffers(this->window);
 		}

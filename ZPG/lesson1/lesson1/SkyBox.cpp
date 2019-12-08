@@ -1,14 +1,18 @@
 #include "SkyBox.h"
 
-SkyBox::SkyBox(string prefix) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix)) { this->createShader(); }
+SkyBox::SkyBox(string prefix, Camera* camera) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix)) { this->createShader(camera); }
+
 
 void SkyBox::draw()
 {
 	glDepthMask(GL_FALSE);
 	this->shader->use();
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 	//glBindTexture(GL_TEXTURE_CUBE_MAP, this->id);
 	ObjectAssimp::draw(this->shader);
 	glDepthMask(GL_TRUE);
+	glUseProgram(0);
 }
 
 Texture* SkyBox::load(string prefix)
@@ -23,15 +27,11 @@ Texture* SkyBox::load(string prefix)
 	return new Texture(faces);
 }
 
-void SkyBox::createShader()
+void SkyBox::createShader(Camera* camera)
 {
 	this->shader = new Shader("./shaders/SkyBox/skybox_vertex.glsl", "./shaders/SkyBox/skybox_fragment.glsl");
+	this->shader->subscribeCamera(camera);
 }
 
-void SkyBox::setShaderProperties()
-{
-
-
-}
 
 

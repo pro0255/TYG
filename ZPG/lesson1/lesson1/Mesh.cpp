@@ -12,6 +12,7 @@ Mesh::Mesh(const char* path)
 
 void Mesh::draw(Shader* shader) //vykresleni jednotivych modelu ve velkem meshi
 {
+	//shader->use();
 	for (unsigned int i = 0; i < this->meshes.size(); i++) {
 		meshes.at(i).draw();
 	}

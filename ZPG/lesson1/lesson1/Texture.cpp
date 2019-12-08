@@ -27,7 +27,8 @@ Texture::Texture(const char* path)
 	glActiveTexture(GL_TEXTURE0 + this->id); //aktivace texturovaci jednotky
 
 	GLuint textureId = SOIL_load_OGL_texture(path, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	//glBindTexture(GL_TEXTURE_2D, textureId);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 }
 
 
@@ -36,4 +37,5 @@ Texture::Texture() : Texture("./textures/test.png") {}
 void Texture::set_shader_properties(Shader* shader)
 {
 	shader->setUniform1i("textureUnitId", this->id);
+
 }

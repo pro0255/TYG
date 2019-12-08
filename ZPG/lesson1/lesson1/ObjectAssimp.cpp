@@ -24,7 +24,7 @@ void ObjectAssimp::resetObject()
 
 void ObjectAssimp::set_shader_properties(Shader* shader)
 {
-	shader->use();
+	//shader->use();
 	shader->sendUniformMat4("modelMatrix", this->modelMatrix);
 	shader->sendUniformVec4("objectColor", this->color);
 	shader->setUniform1i("hasObjectTexture", this->texture != nullptr); //1-false 0-true
