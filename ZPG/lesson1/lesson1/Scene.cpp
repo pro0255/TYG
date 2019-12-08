@@ -52,16 +52,16 @@ Scene::Scene(GLFWwindow* window)
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 
 
-	this->my_assimp_objects.push_back(this->objFac->getProduct(MODEL::HOUSE, TEXTURE::MONKEY));
+	this->my_assimp_objects.push_back(this->objFac->getProduct(MODEL::HOUSE, TEXTURE::HOUSE));
 
 
 
-	this->my_assimp_objects.at(0)->rotateObject(5, glm::vec3(1, 0, 1));
+	//this->my_assimp_objects.at(2)->rotateObject(5, glm::vec3(1, 0, 1));
 
 
-	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
-	this->my_assimp_objects.at(1)->rotateObject(5, glm::vec3(0, 1, 1));
-	this->my_assimp_objects.at(1)->translateObject(glm::vec3(0, 0, 5));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	//this->my_assimp_objects.at(2)->rotateObject(5, glm::vec3(0, 1, 1));
+	//this->my_assimp_objects.at(2)->translateObject(glm::vec3(0, 0, 5));
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 	//this->my_assimp_objects.at(0)->scaleObject(glm::vec3(0.2));
 	//auto tmp = new ObjectAssimp(skybox_model, this->skybox->cubemap);
@@ -77,6 +77,14 @@ Scene::Scene(GLFWwindow* window)
 		lamp->scaleObject(glm::vec3(0.2f));
 		this->my_assimp_objects.push_back(lamp);
 	}
+
+	for (unsigned int i = 0; i < this->lights2.size(); i++) {
+		auto* lamp = new ObjectAssimp(skybox_model, glm::vec4(this->colFac->getProduct(COLOR::BLUE), 1));
+		lamp->translateObject(lights2[i]->getPosition());
+		lamp->scaleObject(glm::vec3(0.2f));
+		this->my_assimp_objects.push_back(lamp);
+	}
+
 
 }
 
@@ -143,8 +151,12 @@ void Scene::createLights()
 {
 	this->flashlight = new FlashLight(12.5, this->camera);
 
-	this->lights.push_back(new Light(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::WHITE), this->colFac->getProduct(COLOR::WHITE)));
-	this->lights.push_back(new Light(glm::vec3(0, 0, 0), this->colFac->getProduct(COLOR::RED), glm::vec3(1, 0, 0)));
+
+	this->lights2.push_back(new PointLight(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::YELLOW)));
+	//auto* lighttmp = new SpotLight(7.5, 15, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), this->colFac->getProduct(COLOR::BLUE));
+	//this->lights2.push_back((PointLight*)lighttmp);
+	//this->lights.push_back(new Light(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::WHITE), this->colFac->getProduct(COLOR::WHITE)));
+	//this->lights.push_back(new Light(glm::vec3(0, 0, 0), this->colFac->getProduct(COLOR::RED), glm::vec3(1, 0, 0)));
 }
 
 
@@ -153,10 +165,19 @@ void Scene::drawLights()
 {
 	shader->use();
 
+	shader->setUniform1i("lightsCount", this->lights2.size());
+	for (unsigned int i = 0; i < this->lights2.size(); i++) {
+		this->lights2[i]->setShaderProperties(shader, i);
+	}
+
+	/*
+	shader->use();
+
 	shader->setUniform1i("lightsCount", this->lights.size());
 	for (unsigned int i = 0; i < this->lights.size(); i++) {
 		this->lights[i]->setShaderProperties(shader, i);
 	}
+	*/
 }
 
 

@@ -122,8 +122,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BaseLight.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColorFactory.cpp" />
+    <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="FlashLight.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -134,10 +136,12 @@
     <ClCompile Include="ObjectAssimp.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjFactory.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -146,8 +150,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BaseLight.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorFactory.h" />
+    <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="FlashLight.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
@@ -165,10 +171,12 @@
     <ClInclude Include="ObjectAssimp.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjFactory.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="Window.h" />

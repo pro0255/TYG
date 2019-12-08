@@ -18,6 +18,8 @@
 #include "ColorFactory.h"
 #include "ModelFactory.h"
 #include "ObjFactory.h"
+#include "PointLight.h"
+#include "SpotLight.h"
 
 class Renderer;
 class Scene
@@ -36,6 +38,7 @@ private:
 
 	SkyBox* skybox;
 	vector<Light*> lights;
+	vector<PointLight*> lights2;
 
 	Mesh* my_tmp;
 
