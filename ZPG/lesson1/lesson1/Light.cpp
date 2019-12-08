@@ -13,7 +13,7 @@ Light::Light(glm::vec3 position, glm::vec3 diffuseColor, glm::vec3 specularColor
 	this->position = position;
 	this->diffuseColor = diffuseColor;
 	this->specularColor = specularColor;
-	this->ambientColor = glm::vec3(0.05, 0.05, 0.05);
+	this->ambientColor = glm::vec3(0.001, 0.001, 0.001);
 }
 
 Light::Light(glm::vec3 position, glm::vec3 colorAll) : Light(position, colorAll, colorAll) {}
@@ -51,8 +51,14 @@ void Light::setShaderProperties(Shader* shader, int index)
 {
 	//shader->use(); //pouziti prave aktualniho shaderu
 	string prefix = "lights[" + std::to_string(index) + "].";
-	shader->sendUniformVec4((prefix + "position").c_str(), glm::vec4(this->position, 1));
-	shader->sendUniformVec4((prefix + "diffuse").c_str(), glm::vec4(this->diffuseColor, 1));
-	shader->sendUniformVec4((prefix + "specular").c_str(), glm::vec4(this->specularColor, 1));
-	shader->sendUniformVec4((prefix + "ambient").c_str(), glm::vec4(this->ambientColor, 1));
+	this->setShaderProperties(shader, prefix);
+
+}
+
+void Light::setShaderProperties(Shader* shader, string name)
+{
+	shader->sendUniformVec4((name + "position").c_str(), glm::vec4(this->position, 1));
+	shader->sendUniformVec4((name + "diffuse").c_str(), glm::vec4(this->diffuseColor, 1));
+	shader->sendUniformVec4((name + "specular").c_str(), glm::vec4(this->specularColor, 1));
+	shader->sendUniformVec4((name + "ambient").c_str(), glm::vec4(this->ambientColor, 1));
 }

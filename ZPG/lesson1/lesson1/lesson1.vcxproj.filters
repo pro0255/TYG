@@ -105,6 +105,12 @@
     <ClCompile Include="SkyBox.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
+    <ClCompile Include="ColorFactory.cpp">
+      <Filter>Factories\ColorFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashLight.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -174,6 +180,12 @@
       <Filter>models</Filter>
     </ClInclude>
     <ClInclude Include="SkyBox.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorFactory.h">
+      <Filter>Factories\ColorFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashLight.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
   </ItemGroup>

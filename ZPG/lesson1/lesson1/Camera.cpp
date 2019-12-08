@@ -29,6 +29,11 @@ Camera::Camera()
 
 
 
+glm::vec3 Camera::getTarget()
+{
+	return this->target;
+}
+
 glm::vec3 Camera::getEye()
 {
 	return this->eye;

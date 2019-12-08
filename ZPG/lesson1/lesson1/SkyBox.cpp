@@ -5,16 +5,18 @@ SkyBox::SkyBox(string prefix, Camera* camera) : ObjectAssimp(new Mesh("./models/
 
 void SkyBox::draw()
 {
-	//glDepthFunc(GL_LEQUAL);
-	glDepthMask(GL_FALSE);
+	glDepthFunc(GL_LEQUAL);
+	//glDepthMask(GL_FALSE);
 	this->shader->use();
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 	this->setShaderProperties();
 	this->mesh->draw(this->shader);
 	//glBindTexture(GL_TEXTURE_CUBE_MAP, this->id);
+	//this->shader->sendUniformMat4("viewMatrix", glm::mat4(glm::mat3(this->camera->getCamera()))); //maybe delete
+	//this->shader->sendUniformMat4("projectionMatrix", this->camera->getProjectionMatrix());
 	//ObjectAssimp::draw(this->shader);
-	//glDepthFunc(GL_LESS);
-	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LESS);
+	//glDepthMask(GL_TRUE);
 	glUseProgram(0);
 }
 
@@ -33,18 +35,17 @@ Texture* SkyBox::load(string prefix)
 void SkyBox::createShader(Camera* camera)
 {
 	this->shader = new Shader("./shaders/SkyBox/skybox_vertex.glsl", "./shaders/SkyBox/skybox_fragment.glsl");
-	this->shader->subscribeCamera(camera);
+	//this->shader->subscribeCamera(camera);
 }
 
 void SkyBox::setShaderProperties()
 {
-	this->shader->sendUniformMat4("modelMatrix", glm::mat4(1));
-	this->shader->sendUniformMat4("viewMatrix", glm::mat4(glm::mat3(this->camera->getCamera()))); //maybe delete
-	this->shader->sendUniformMat4("projectionMatrix", this->camera->getProjectionMatrix());
-	this->shader->sendUniformVec4("objectColor", glm::vec4(1));
-	this->shader->setUniform1i("hasObjectTexture", this->texture != nullptr); //1-false 0-true
+	shader->sendUniformMat4("viewMatrix", glm::mat4(glm::mat3(this->camera->getCamera()))); //Lock translating skybox in scene
+	shader->sendUniformMat4("projectionMatrix", this->camera->getProjectionMatrix());
+	shader->sendUniformVec4("objectColor", glm::vec4(1));
+	shader->setUniform1i("hasObjectTexture", this->texture != nullptr); //1-false 0-true
 	if (texture != nullptr) {
-		this->texture->set_shader_properties(shader);
+		texture->set_shader_properties(shader);
 	}
 }
 

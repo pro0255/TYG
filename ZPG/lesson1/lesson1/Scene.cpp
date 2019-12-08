@@ -30,19 +30,25 @@ Scene::Scene(GLFWwindow* window)
 	//this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
 	//this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
 
-	Texture* house_texture = new Texture("./textures/test.png");
+	Texture* house_texture = new Texture("./textures/house.png");
 	Texture* monkey = new Texture("./textures/monkey.png");
+	Texture* barn = new Texture("./textures/barn.png");
+	Texture* log_texture = new Texture("./textures/log.png");
 
-	Mesh* house = new Mesh("./models/Assimp/test.obj");
+	Mesh* house = new Mesh("./models/Assimp/house.obj");
 	Mesh* cube = new Mesh("./models/Assimp/cube.obj");
 	Mesh* skybox_model = new Mesh("./models/SkyBox/skybox.obj");
+	Mesh* log_model = new Mesh("./models/Assimp/Farm/log.obj");
+	Mesh* pig_model = new Mesh("./models/Assimp/Farm/pig.obj");
+	Mesh* tmp = new Mesh("./models/Assimp/Farm/Alpine_chalet.obj");
 
 	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
 	this->skybox->translateObject(this->camera->getEye());
-	this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
-	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
-	this->my_assimp_objects.at(1)->translateObject(glm::vec3(20.0, 0, 0));
-
+	//this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+//	this->my_assimp_objects.at(1)->translateObject(glm::vec3(20.0, 0, 0));
+	this->my_assimp_objects.push_back(new ObjectAssimp(pig_model, monkey));
+	this->my_assimp_objects.at(0)->scaleObject(glm::vec3(0.2));
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 	//this->my_assimp_objects.at(0)->scaleObject(glm::vec3(0.2));
 	//auto tmp = new ObjectAssimp(skybox_model, this->skybox->cubemap);
@@ -112,8 +118,10 @@ void Scene::createObjects()
 //Vytvoreni svetel
 void Scene::createLights()
 {
-	this->lights.push_back(new Light(glm::vec3(10, 10, 10), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)));
-	this->lights.push_back(new Light(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(1, 0, 0)));
+	this->flashlight = new FlashLight(12.5, this->camera);
+
+	//this->lights.push_back(new Light(glm::vec3(10, 10, 10), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)));
+	//this->lights.push_back(new Light(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(1, 0, 0)));
 }
 
 
@@ -137,15 +145,17 @@ void Scene::draw()
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-			this->skybox->draw();
+
 
 
 			this->shader->use();
 			this->camera->processKeyMovement();
+			this->flashlight->draw(this->shader);
 			this->shader->sendUniformVec3("viewPos", this->camera->getEye());
 			//this->light->updatePosition(this->shader);
 			this->draw_objects();
 
+			this->skybox->draw();
 			//glClearColor(0.f, 0.0f, 0.3f, 1.0f);
 			glfwPollEvents();
 			glfwSwapBuffers(this->window);

@@ -67,7 +67,7 @@ public:
 	glm::mat4 projectionMatrix;
 	glm::mat4 viewMatrix;
 
-
+	glm::vec3 getTarget();
 	glm::vec3 getEye();
 	glm::mat4 getCamera();
 	glm::mat4 getProjectionMatrix();

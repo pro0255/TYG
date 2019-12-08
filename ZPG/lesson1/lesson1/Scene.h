@@ -14,6 +14,7 @@
 #include "Mesh.h"
 #include "ObjectAssimp.h"
 #include "SkyBox.h"
+#include "FlashLight.h"
 
 
 class Renderer;
@@ -29,6 +30,7 @@ private:
 	Camera* camera;
 	Shader* shader;
 	Light* light;
+	FlashLight* flashlight;
 
 	SkyBox* skybox;
 	vector<Light*> lights;
