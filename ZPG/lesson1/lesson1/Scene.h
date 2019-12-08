@@ -15,7 +15,9 @@
 #include "ObjectAssimp.h"
 #include "SkyBox.h"
 #include "FlashLight.h"
-
+#include "ColorFactory.h"
+#include "ModelFactory.h"
+#include "ObjFactory.h"
 
 class Renderer;
 class Scene
@@ -26,7 +28,7 @@ private:
 	vector<Object*> my_objects;
 	//Object* plain;
 	GLFWwindow* window;
-	ObjectFactory* factory;
+
 	Camera* camera;
 	Shader* shader;
 	Light* light;
@@ -40,6 +42,9 @@ private:
 	void draw_objects();
 
 
+	ObjFactory* objFac;
+	ColorFactory* colFac;
+
 public:
 	Scene(GLFWwindow* window);
 
@@ -49,6 +54,9 @@ public:
 	Camera* getCamera();
 	void createObjects();
 
+
+
+	void createFactories();
 	void createLights();
 	void drawLights();
 	void draw();

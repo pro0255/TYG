@@ -25,6 +25,7 @@ public:
 	ObjectAssimp(Mesh* mesh);
 	ObjectAssimp(Mesh* mesh, glm::vec4 color);
 	ObjectAssimp(Mesh* mesh, Texture* texture);
+	ObjectAssimp(Mesh* mesh, Texture* texture, glm::vec4 color);
 
 	void set_shader_properties(Shader* shader);
 	void draw(Shader* shader);

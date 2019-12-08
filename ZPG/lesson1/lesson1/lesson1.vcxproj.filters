@@ -52,6 +52,12 @@
     <Filter Include="shaders\Classic">
       <UniqueIdentifier>{f543987d-a15a-4cbd-a2ad-20b98f0cbf94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factories\ObjectFactory">
+      <UniqueIdentifier>{8a27ca34-5da1-4050-9ee9-a927704052dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\TextureFactory">
+      <UniqueIdentifier>{f2dc1220-30b9-4d20-8425-66be5d40a84c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="FlashLight.cpp">
       <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelFactory.cpp">
+      <Filter>Factories\ModelFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjFactory.cpp">
+      <Filter>Factories\ObjectFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureFactory.cpp">
+      <Filter>Factories\TextureFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +202,15 @@
     </ClInclude>
     <ClInclude Include="FlashLight.h">
       <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelFactory.h">
+      <Filter>Factories\ModelFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjFactory.h">
+      <Filter>Factories\ObjectFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureFactory.h">
+      <Filter>Factories\TextureFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

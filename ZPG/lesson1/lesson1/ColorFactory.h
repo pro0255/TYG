@@ -1,6 +1,7 @@
 #pragma once
-
-enum COLOR {
+#include <GLFW/glfw3.h>
+#include <glm/mat4x4.hpp> // glm::mat4
+enum class COLOR {
 	RED,
 	GREEN,
 	BLUE,
@@ -8,10 +9,14 @@ enum COLOR {
 	BLACK,
 	YELLOW,
 	PURPLE,
-	PINK
+	PINK,
+	RANDOM
 };
 
 class ColorFactory
 {
+public:
+	glm::vec3 getProduct(COLOR type);
+private:
 };
 

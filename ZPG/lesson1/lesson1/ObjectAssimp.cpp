@@ -50,6 +50,15 @@ ObjectAssimp::ObjectAssimp(Mesh* mesh, Texture* texture) : ObjectAssimp(mesh, gl
 	this->texture = texture;
 }
 
+ObjectAssimp::ObjectAssimp(Mesh* mesh, Texture* texture, glm::vec4 color) {
+	resetObject();
+	this->mesh = mesh;
+	this->texture = texture;
+	this->color = color;
+	this->id = ObjectAssimp::GENERATE_ID++;
+
+}
+
 void ObjectAssimp::draw(Shader* shader)
 {
 	this->set_shader_properties(shader);

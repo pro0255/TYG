@@ -14,9 +14,10 @@ Scene::Scene(GLFWwindow* window)
 {
 
 
-
 	this->window = window;
-	this->factory = new ObjectFactory();
+
+
+
 	this->shader = new Shader();
 	this->camera = new Camera();
 	this->shader->subscribeCamera(this->camera);
@@ -24,6 +25,7 @@ Scene::Scene(GLFWwindow* window)
 	this->camera->registerObserver(this->shader);
 
 
+	this->createFactories();
 	this->createLights(); //vytvoreni svetel
 	this->drawLights(); //nasetovani svetel
 
@@ -89,15 +91,18 @@ void Scene::draw_objects()
 
 void Scene::scaleObject()
 {
+	/*
 	for (int i = 0; i < my_objects.size(); i++) {
 		if (my_objects.at(i)->getId() == this->selected_Object_Id) {
 			my_objects.at(i)->scaleObject(glm::vec3(1.5));
 		}
 	}
+	*/
 }
 
 void Scene::createObject(glm::vec3 pos)
 {
+	/*
 	int RANGE = 5;
 	Object* created = factory->createObject(SPHERE, glm::vec4(1.0, 0.0, 0.0, 1));
 	if ((camera->getEye().z + RANGE) < pos.z) {
@@ -108,6 +113,7 @@ void Scene::createObject(glm::vec3 pos)
 		created->translateObject(glm::vec3(pos.x, pos.y, pos.z));
 	}
 	my_objects.push_back(created);
+	*/
 }
 
 Camera* Scene::getCamera()
@@ -120,13 +126,19 @@ void Scene::createObjects()
 }
 
 
+void Scene::createFactories()
+{
+	this->colFac = new ColorFactory();
+	this->objFac = new ObjFactory(this->colFac);
+}
+
 //Vytvoreni svetel
 void Scene::createLights()
 {
 	this->flashlight = new FlashLight(12.5, this->camera);
 
-	this->lights.push_back(new Light(glm::vec3(10, 10, 10), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)));
-	this->lights.push_back(new Light(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(1, 0, 0)));
+	this->lights.push_back(new Light(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::WHITE), this->colFac->getProduct(COLOR::WHITE)));
+	this->lights.push_back(new Light(glm::vec3(0, 0, 0), this->colFac->getProduct(COLOR::RED), glm::vec3(1, 0, 0)));
 }
 
 
