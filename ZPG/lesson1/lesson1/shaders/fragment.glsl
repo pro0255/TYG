@@ -3,6 +3,45 @@
 #define MAX_LIGHTS 10;
 
 
+struct DirectionLight {
+	vec3 direction;
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+
+struct PointLight {
+	vec4 position;
+
+	float constant;
+	float lienar;
+	float quadratic;
+
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+struct SpotLight {
+	vec4 position;
+	vec3 direction;
+	float cutOff;
+	float outerCutOff;
+
+	float constant;
+	float lienar;
+	float quadratic;
+
+	vec4 ambient;
+	vec4 diffuse;
+	vec4 specular;
+};
+
+
+
+
+
 
 
 struct Light {
@@ -62,6 +101,14 @@ vec4 calcFlashLight();
 float calcAttenuation(Light light);
 vec4 calcAmbientForLight(Light light);
 vec4 calcSpotLight(Light light);
+
+
+vec4 calcDirectionLight(DirectionLight light, vec3 viewDirection, vec4 objectColor);
+vec4 calcSpotLight(SpotLight light, vec3 viewDirection, vec4 objectColor);
+vec4 calcPointLight(PointLight light, vec3 viewDirection, vec4 objectColor);
+
+vec4 sumSpotLight(vec3 viewDirection, vec4 objectColor);
+vec4 sumPointLight(vec3 viewDirection, vec4 objectColor);
 
 
 void main () {
@@ -147,3 +194,62 @@ vec4 calcFlashLight() {
 };
 
 
+
+vec4 calcDirectionLight(DirectionLight light, vec3 viewDirection, vec4 objectColor) {
+	vec3 reflectionDirection = reflect(normalize(-light.direction), normalize(ex_worldNormal));
+	float diff = max(dot(ex_worldNormal, normalize(-light.direction)), 0.0);
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
+	vec4 ambientPart = light.ambient * objectColor;
+	vec4 diffusePart = light.diffuse * diff * objectColor;
+	vec4 specularPart = light.specular * spec * objectColor;
+	return ambientPart + diffusePart + specularPart;
+};
+vec4 calcSpotLight(SpotLight light, vec3 viewDirection, vec4 objectColor) {
+	vec3 lightDirection = vec3(light.position - ex_worldPosition);
+
+	float diff = max(dot(normalize(ex_worldNormal), normalize(lightDirection)), 0.0);
+
+	vec3 reflectionDirection = reflect(normalize(-lightDirection), normalize(ex_worldNormal));
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
+
+	float dist = length(light.position - ex_worldPosition);
+	float attenuation =  1.0 / (light.constant + light.lienar * dist + light.quadratic * (dist * dist));
+
+	float theta = dot(normalize(lightDirection), normalize(-light.direction));
+	float epsilon = light.cutOff - light.outerCutOff;
+	float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
+
+	vec4 ambientPart = light.ambient * objectColor;
+	vec4 diffusePart = light.diffuse * diff * objectColor;
+	vec4 specularPart = light.specular * spec * objectColor;
+
+	ambientPart *= attenuation * intensity;
+	diffusePart *= attenuation * intensity;
+	specularPart *= attenuation * intensity;
+	return (ambientPart + diffusePart + specularPart);
+};
+
+
+vec4 calcPointLight(PointLight light, vec3 viewDirection, vec4 objectColor) {
+	vec3 lightDirection = vec3(light.position - ex_worldPosition);
+	float diff = max(dot(normalize(ex_worldNormal), normalize(lightDirection)), 0.0);
+
+	vec3 reflectionDirection = reflect(normalize(-lightDirection), normalize(ex_worldNormal));
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
+
+	float dist = length(light.position - ex_worldPosition);
+	float attenuation =  1.0 / (light.constant + light.lienar * dist + light.quadratic * (dist * dist));
+ 
+	vec4 ambientPart = light.ambient * objectColor;
+	vec4 diffusePart = light.diffuse * diff * objectColor;
+	vec4 specularPart = light.specular * spec * objectColor;
+
+
+	ambientPart *= attenuation;
+	diffusePart *= attenuation;
+	specularPart *= attenuation;
+	return (ambientPart + diffusePart + specularPart);
+};
+
+vec4 sumSpotLight(vec3 viewDirection, vec4 objectColor);
+vec4 sumPointLight(vec3 viewDirection, vec4 objectColor);
