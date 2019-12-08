@@ -9,8 +9,10 @@ public:
 	SkyBox(string prefix, Camera* camera);
 	void draw();
 	Shader* shader;
+	Camera* camera;
 private:
 	Texture* load(string prefix);
 	void createShader(Camera* camera);
+	void setShaderProperties();
 };
 

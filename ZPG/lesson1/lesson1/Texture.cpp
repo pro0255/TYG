@@ -18,7 +18,13 @@ Texture::Texture(vector<string> faces)
 		SOIL_LOAD_RGBA,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
 Texture::Texture(const char* path)
@@ -28,7 +34,7 @@ Texture::Texture(const char* path)
 
 	GLuint textureId = SOIL_load_OGL_texture(path, SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 	//glBindTexture(GL_TEXTURE_2D, textureId);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
 
@@ -37,5 +43,6 @@ Texture::Texture() : Texture("./textures/test.png") {}
 void Texture::set_shader_properties(Shader* shader)
 {
 	shader->setUniform1i("textureUnitId", this->id);
+	glActiveTexture(GL_TEXTURE + this->id);
 
 }

@@ -11,9 +11,12 @@ class ObjectAssimp
 {
 private:
 	static int GENERATE_ID;
-	Mesh* mesh;
+
 	glm::mat4 modelMatrix;
 	glm::vec4 color;
+
+protected:
+	Mesh* mesh;
 
 public:
 	Texture* texture;
