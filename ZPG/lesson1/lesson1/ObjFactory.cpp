@@ -3,6 +3,8 @@
 ObjFactory::ObjFactory(ColorFactory* colorFactory)
 {
 	this->colorFactory = colorFactory;
+	this->modelFactory = new ModelFactory();
+	this->textureFactory = new TextureFactory();
 }
 
 ObjFactory::~ObjFactory()
@@ -12,7 +14,7 @@ ObjFactory::~ObjFactory()
 	delete this->textureFactory;
 }
 
-ObjectAssimp* ObjFactory::getProduct(MODEL model, TEXTURE texture = TEXTURE::NONE, COLOR color = COLOR::WHITE)
+ObjectAssimp* ObjFactory::getProduct(MODEL model, TEXTURE texture, COLOR color)
 {
 	Mesh* object_model = this->modelFactory->getProduct(model);
 	Texture* object_texture = this->textureFactory->getProduct(texture);

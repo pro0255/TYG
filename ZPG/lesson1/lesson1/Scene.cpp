@@ -49,7 +49,13 @@ Scene::Scene(GLFWwindow* window)
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 //	this->my_assimp_objects.at(1)->translateObject(glm::vec3(20.0, 0, 0));
-	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+
+
+	this->my_assimp_objects.push_back(this->objFac->getProduct(MODEL::HOUSE, TEXTURE::MONKEY));
+
+
+
 	this->my_assimp_objects.at(0)->rotateObject(5, glm::vec3(1, 0, 1));
 
 
