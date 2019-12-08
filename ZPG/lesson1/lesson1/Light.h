@@ -20,6 +20,10 @@ private:
 	glm::vec3 specularColor;
 	glm::vec3 ambientColor;
 
+	float constant;
+	float linear;
+	float quadratic;
+
 protected:
 	void setShaderProperties(Shader* shader, string name);
 	glm::vec3 position;

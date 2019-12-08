@@ -33,7 +33,7 @@ void ObjectAssimp::set_shader_properties(Shader* shader)
 	}
 }
 
-ObjectAssimp::ObjectAssimp(Mesh* mesh) : ObjectAssimp(mesh, glm::vec4(1.0, 0, 0, 1.0))
+ObjectAssimp::ObjectAssimp(Mesh* mesh) : ObjectAssimp(mesh, glm::vec4(0, 0, 0, 1.0))
 {
 }
 

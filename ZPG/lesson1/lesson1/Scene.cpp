@@ -47,8 +47,13 @@ Scene::Scene(GLFWwindow* window)
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, house_texture));
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 //	this->my_assimp_objects.at(1)->translateObject(glm::vec3(20.0, 0, 0));
-	this->my_assimp_objects.push_back(new ObjectAssimp(pig_model, monkey));
-	this->my_assimp_objects.at(0)->scaleObject(glm::vec3(0.2));
+	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	this->my_assimp_objects.at(0)->rotateObject(5, glm::vec3(1, 0, 1));
+
+
+	this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
+	this->my_assimp_objects.at(1)->rotateObject(5, glm::vec3(0, 1, 1));
+	this->my_assimp_objects.at(1)->translateObject(glm::vec3(0, 0, 5));
 	//this->my_assimp_objects.push_back(new ObjectAssimp(house, monkey));
 	//this->my_assimp_objects.at(0)->scaleObject(glm::vec3(0.2));
 	//auto tmp = new ObjectAssimp(skybox_model, this->skybox->cubemap);
@@ -120,8 +125,8 @@ void Scene::createLights()
 {
 	this->flashlight = new FlashLight(12.5, this->camera);
 
-	//this->lights.push_back(new Light(glm::vec3(10, 10, 10), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)));
-	//this->lights.push_back(new Light(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(1, 0, 0)));
+	this->lights.push_back(new Light(glm::vec3(10, 10, 10), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1)));
+	this->lights.push_back(new Light(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), glm::vec3(1, 0, 0)));
 }
 
 
@@ -143,6 +148,7 @@ void Scene::draw()
 	try {
 		while (!glfwWindowShouldClose(this->window))
 		{
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 

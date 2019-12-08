@@ -3,15 +3,22 @@
 #define MAX_LIGHTS 10;
 
 
+
+
 struct Light {
 	vec4 position;
 
 	vec3 direction; //FlashLight
 	float cutOff;	//FlashLight
+	float outerCutOff;
 
 	vec4 diffuse;
 	vec4 specular;
 	vec4 ambient;
+
+	float constant;
+	float linear;
+	float quadratic;
 };
 
 
@@ -52,6 +59,9 @@ out vec4 frag_colour;
 vec4 calcAmbient(vec4 objectColor);
 vec4 calcLight(Light light, vec3 normal, vec4 fragPos, vec4 viewPos, vec4 objectColor);
 vec4 calcFlashLight();
+float calcAttenuation(Light light);
+vec4 calcAmbientForLight(Light light);
+vec4 calcSpotLight(Light light);
 
 
 void main () {
@@ -63,12 +73,13 @@ void main () {
 		objColor *= objTexture;
 	}
 
-	vec4 finalLight = calcAmbient(objectColor);
+	//vec4 finalLight = calcAmbient(objectColor);
+	vec4 finalLight;
 	for(int i = 0; i < lightsCount; i++) {
 		finalLight += calcLight(lights[i], ex_worldNormal, ex_worldPosition, viewPos, objectColor);
+		finalLight += calcAmbientForLight(lights[i]);
 	}
 	finalLight += calcFlashLight();
-
 
 	frag_colour = objColor * finalLight;
 };
@@ -77,6 +88,16 @@ void main () {
 
 vec4 calcAmbient(vec4 objectColor) {
 	return vec4(0.0, 0.0, 0.0, 1) * objectColor;
+};
+
+vec4 calcAmbientForLight(Light light) {
+	return light.ambient * calcAttenuation(light);
+};
+
+
+float calcAttenuation(Light light) {
+	float distance = length(light.position - ex_worldPosition);
+	return 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
 }
 
 
@@ -92,25 +113,37 @@ vec4 calcLight(Light light, vec3 normal, vec4 fragPos, vec4 viewPos, vec4 object
 	float reflectionProduct = max(dot(normalize(cameraDirection), reflectionDirection), 0.0);
 
 
+
+
 	//Wtf is this
-	float distance = length(light.position - fragPos);
-	float attenuation = 1.0 / (1 + 0.09 * distance + 0.032 * (distance * distance));
-
+	//float distance = length(light.position - fragPos);
+	//float attenuation = 1.0 / (1 + 0.09 * distance + 0.032 * (distance * distance));
+	
 	//Calculation of light!
-	vec4 diffusePart = diffuseProduct * objectColor * light.diffuse;
-	vec4 specularPart = pow(reflectionProduct, 32) * light.specular; 
+	vec4 diffusePart = diffuseProduct * objectColor * light.diffuse * calcAttenuation(light);
+	vec4 specularPart = pow(reflectionProduct, 32) * light.specular * calcAttenuation(light); 
 
-	return (diffusePart * attenuation) + (specularPart* attenuation);
+	return (diffusePart) + (specularPart);
 };
 
-vec4 calcFlashLight() {
+
+vec4 calcSpotLight(Light light) {
 	vec3 lightDirection = vec3(flashlight.position - ex_worldPosition);
 	float theta = dot(lightDirection, normalize(-flashlight.direction));
 
 	if(theta > flashlight.cutOff) {
-		return calcLight(flashlight, ex_worldNormal, ex_worldPosition, viewPos, objectColor) + flashlight.ambient;
+		float epsilon = (flashlight.cutOff - flashlight.outerCutOff);
+		float intensity = clamp((theta / flashlight.outerCutOff) / epsilon, 0.0, 1.0);
+		vec4 diffuse_spectacular = calcLight(flashlight, ex_worldNormal, ex_worldPosition, viewPos, objectColor);
+		return diffuse_spectacular * intensity + calcAmbientForLight(flashlight);
 	}
 	else {
 		return flashlight.ambient;
 	}
+}
+
+vec4 calcFlashLight() {
+	return calcSpotLight(flashlight);
 };
+
+
