@@ -20,6 +20,7 @@
 #include "ObjFactory.h"
 #include "PointLight.h"
 #include "SpotLight.h"
+#include "DirectionLight.h"
 
 class Renderer;
 class Scene
@@ -38,7 +39,9 @@ private:
 
 	SkyBox* skybox;
 	vector<Light*> lights;
-	vector<PointLight*> lights2;
+	vector<PointLight*> pointLights;
+	vector<SpotLight*> spotLights;
+	DirectionLight* directionLight;
 
 	Mesh* my_tmp;
 
@@ -64,5 +67,10 @@ public:
 	void drawLights();
 	void draw();
 	int selected_Object_Id;
+
+
+	void createPointLights();
+	void createSpotLights();
+	void createDirectionLight();
 };
 

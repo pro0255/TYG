@@ -28,6 +28,9 @@ Scene::Scene(GLFWwindow* window)
 	this->createFactories();
 	this->createLights(); //vytvoreni svetel
 	this->drawLights(); //nasetovani svetel
+	//this->createPointLights();
+	this->createSpotLights();
+	this->createDirectionLight();
 
 	//this->my_assimp_objects.push_back(new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 6)));
 	//this->my_assimp_objects.at(0)->translateObject(glm::vec3(20, 0, 0));
@@ -78,12 +81,24 @@ Scene::Scene(GLFWwindow* window)
 		this->my_assimp_objects.push_back(lamp);
 	}
 
-	for (unsigned int i = 0; i < this->lights2.size(); i++) {
-		auto* lamp = new ObjectAssimp(skybox_model, glm::vec4(this->colFac->getProduct(COLOR::BLUE), 1));
-		lamp->translateObject(lights2[i]->getPosition());
+	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
+		auto* lamp = new ObjectAssimp(skybox_model, glm::vec4(this->colFac->getProduct(COLOR::YELLOW), 1));
+		lamp->translateObject(pointLights[i]->getPosition());
 		lamp->scaleObject(glm::vec3(0.2f));
 		this->my_assimp_objects.push_back(lamp);
 	}
+
+
+	for (unsigned int i = 0; i < this->spotLights.size(); i++) {
+		auto* lamp = new ObjectAssimp(skybox_model, glm::vec4(this->colFac->getProduct(COLOR::GREEN), 1));
+
+		lamp->translateObject(spotLights[i]->getPosition());
+		lamp->scaleObject(glm::vec3(0.2f));
+		this->my_assimp_objects.push_back(lamp);
+	}
+
+
+
 
 
 }
@@ -99,6 +114,40 @@ void Scene::draw_objects()
 }
 
 
+
+void Scene::createPointLights()
+{
+	this->pointLights.push_back(new PointLight(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::YELLOW)));
+	this->pointLights.push_back(new PointLight(glm::vec3(10, 10, -10), this->colFac->getProduct(COLOR::YELLOW)));
+
+	shader->use();
+
+	shader->setUniform1i("pointLightsCount", this->pointLights.size());
+	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
+		this->pointLights[i]->setShaderProperties(shader, i);
+	}
+}
+
+void Scene::createSpotLights()
+{
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(-1, -1, 0), glm::vec3(5, 5, 12), this->colFac->getProduct(COLOR::GREEN)));
+	this->spotLights.push_back(new SpotLight(10, 15, glm::vec3(-1, -1, -1), glm::vec3(5, 5, -8), this->colFac->getProduct(COLOR::WHITE)));
+
+	shader->use();
+
+	shader->setUniform1i("spotLightsCount", this->pointLights.size());
+	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
+		this->spotLights[i]->setShaderProperties(shader, i);
+	}
+}
+
+void Scene::createDirectionLight()
+{
+	this->directionLight = new DirectionLight(glm::vec3(0.05, 0.05, 0.05), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1, 1, 1), glm::vec3(-0.2, -1.0f, -0.3f));
+
+	this->shader->use();
+	this->directionLight->setShaderProperties(this->shader);
+}
 
 
 
@@ -152,9 +201,14 @@ void Scene::createLights()
 	this->flashlight = new FlashLight(12.5, this->camera);
 
 
-	this->lights2.push_back(new PointLight(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::YELLOW)));
+
+	//this->pointLights.push_back(new PointLight(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::YELLOW)));
+	//this->pointLights.push_back(new PointLight(glm::vec3(10, 10, -10), this->colFac->getProduct(COLOR::PURPLE)));
 	//auto* lighttmp = new SpotLight(7.5, 15, glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), this->colFac->getProduct(COLOR::BLUE));
 	//this->lights2.push_back((PointLight*)lighttmp);
+
+
+
 	//this->lights.push_back(new Light(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::WHITE), this->colFac->getProduct(COLOR::WHITE)));
 	//this->lights.push_back(new Light(glm::vec3(0, 0, 0), this->colFac->getProduct(COLOR::RED), glm::vec3(1, 0, 0)));
 }
@@ -163,12 +217,14 @@ void Scene::createLights()
 //Nastaveni svetel do sceny
 void Scene::drawLights()
 {
+	/*
 	shader->use();
 
-	shader->setUniform1i("lightsCount", this->lights2.size());
-	for (unsigned int i = 0; i < this->lights2.size(); i++) {
-		this->lights2[i]->setShaderProperties(shader, i);
+	shader->setUniform1i("pointLightsCount", this->pointLights.size());
+	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
+		this->pointLights[i]->setShaderProperties(shader, i);
 	}
+	*/
 
 	/*
 	shader->use();

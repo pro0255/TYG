@@ -6,6 +6,10 @@ DirectionLight::DirectionLight(glm::vec3 ambientColor, glm::vec3 diffuseColor, g
 	this->direction = direction;
 }
 
+void DirectionLight::render(Shader* shader)
+{
+}
+
 void DirectionLight::setShaderProperties(Shader* shader)
 {
 	string prefix = "directionLight.";

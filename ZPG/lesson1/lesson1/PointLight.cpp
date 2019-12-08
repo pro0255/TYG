@@ -21,7 +21,8 @@ void PointLight::setShaderProperties(Shader* shader, string name)
 
 void PointLight::setShaderProperties(Shader* shader, int index)
 {
-	string prefix = "lights[" + std::to_string(index) + "].";
+	//lights before
+	string prefix = "pointLights[" + std::to_string(index) + "].";
 	this->setShaderProperties(shader, prefix);
 }
 

@@ -16,9 +16,16 @@ SpotLight::SpotLight(float cutOff, float outerCutOff, glm::vec3 direction, glm::
 	this->outerCutOff = outerCutOff;
 }
 
+glm::vec3 SpotLight::getPosition()
+{
+	return this->position;
+}
+
+/*
 SpotLight::SpotLight(glm::vec3 position, glm::vec3 ambientColor, glm::vec3 diffuseColor, glm::vec3 specularColor, float constant, float linear, float quadratic) : PointLight(position, ambientColor, diffuseColor, specularColor, constant, linear, quadratic)
 {
 	this->direction = glm::vec3(-0.2f, -1.0f, -0.3f);
 	this->cutOff = 7.5;
 	this->outerCutOff = 15.5;
 }
+*/
