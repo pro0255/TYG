@@ -65,3 +65,9 @@ void ObjectAssimp::draw(Shader* shader)
 	this->mesh->draw(shader);
 
 }
+
+void ObjectAssimp::drawShadow(Shader* shader)
+{
+	shader->sendUniformMat4("modelMatrix", this->modelMatrix);
+	this->mesh->draw(shader);
+}

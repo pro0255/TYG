@@ -138,7 +138,7 @@ void main () {
 //		totalLight += calcLight(lights[i], ex_worldNormal, ex_worldPosition, viewPos, objectColor);
 //		totalLight += calcAmbientForLight(lights[i]);
 //	}
-	totalLight += calcFlashLight();
+	//totalLight += calcFlashLight();
 
 	vec3 viewDirection = vec3(normalize(viewPos - ex_worldPosition));
 	totalLight += sumPointLight(viewDirection, objColor);
@@ -222,6 +222,7 @@ vec4 calcDirectionLight(DirectionLight light, vec3 viewDirection, vec4 objColor)
 	vec4 specularPart = light.specular * spec * objColor;
 	return ambientPart + diffusePart + specularPart;
 };
+
 vec4 calcSpotLight(SpotLight light, vec3 viewDirection, vec4 objColor) {
 	vec3 lightDirection = vec3(light.position - ex_worldPosition);
 

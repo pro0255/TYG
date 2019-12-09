@@ -140,6 +140,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
@@ -185,6 +187,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="shaders\fragment.glsl" />
+    <None Include="shaders\ShadowMap\fragment_shadowMap.glsl" />
+    <None Include="shaders\ShadowMap\vertex_shadowMap.glsl" />
     <None Include="shaders\SkyBox\skybox_fragment.glsl" />
     <None Include="shaders\SkyBox\skybox_vertex.glsl" />
     <None Include="shaders\vertex.glsl" />

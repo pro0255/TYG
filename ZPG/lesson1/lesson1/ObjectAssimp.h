@@ -29,6 +29,7 @@ public:
 
 	void set_shader_properties(Shader* shader);
 	void draw(Shader* shader);
+	void drawShadow(Shader* shader);
 
 	void rotateObject(float angle, glm::vec3 vector);
 	void translateObject(glm::vec3 vector);

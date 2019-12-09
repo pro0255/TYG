@@ -6,6 +6,8 @@ enum class TEXTURE {
 	HOUSE,
 	LOG,
 	MONKEY,
+	LAMP,
+	PIG,
 	NONE
 };
 

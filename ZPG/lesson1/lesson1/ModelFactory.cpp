@@ -23,6 +23,7 @@ void ModelFactory::createModels()
 	this->models.insert({ MODEL::HOUSE, new Mesh("./models/Assimp/house.obj") });
 	this->models.insert({ MODEL::SKYBOX, new Mesh("./models/SkyBox/skybox.obj") });
 	this->models.insert({ MODEL::PLAIN_UV, new Mesh(texture_plain, sizeof(texture_plain), 6) });
+	this->models.insert({ MODEL::LAMP, new Mesh("./models/Assimp/Farm/lamp.obj") });
 }
 
 

@@ -1,6 +1,8 @@
 #include "SkyBox.h"
 
-SkyBox::SkyBox(string prefix, Camera* camera) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix)) { this->createShader(camera); this->camera = camera; }
+SkyBox::SkyBox(string prefix, Camera* camera) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix)) {
+	this->createShader(camera); this->camera = camera; this->translateObject(this->camera->getEye());
+}
 
 
 void SkyBox::draw()

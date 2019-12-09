@@ -6,7 +6,6 @@ uniform mat4 modelMatrix; //poslani matice dovnitr
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
-
 //uniform vec3 lightPosition;
 
 out vec2 _uv;

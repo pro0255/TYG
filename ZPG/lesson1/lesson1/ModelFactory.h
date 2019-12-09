@@ -13,6 +13,7 @@ enum class MODEL {
 	HOUSE,
 	SKYBOX,
 	PLAIN_UV,
+	LAMP
 };
 
 

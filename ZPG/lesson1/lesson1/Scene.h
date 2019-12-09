@@ -21,6 +21,7 @@
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "DirectionLight.h"
+#include "ShadowMap.h"
 
 class Renderer;
 class Scene
@@ -35,17 +36,20 @@ private:
 	Camera* camera;
 	Shader* shader;
 	Light* light;
-	FlashLight* flashlight;
 
+
+	ShadowMap* shadowMap;
 	SkyBox* skybox;
-	vector<Light*> lights;
 	vector<PointLight*> pointLights;
 	vector<SpotLight*> spotLights;
 	DirectionLight* directionLight;
+	FlashLight* flashlight;
 
 	Mesh* my_tmp;
 
 	void draw_objects();
+	void draw_objects(Shader* new_shader);
+
 
 
 	ObjFactory* objFac;
