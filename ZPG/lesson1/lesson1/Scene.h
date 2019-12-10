@@ -52,14 +52,18 @@ private:
 
 	void init();
 public:
+
+
+
 	int selectedObjectId;
 	Scene(GLFWwindow* window);
-
-
 
 	Camera* getCamera();
 	void createObjects();
 
+	SceneContainer* getSceneContainer();
+	Shader* getObjectShader();
+	Shader* getDebugShadowShader();
 
 
 

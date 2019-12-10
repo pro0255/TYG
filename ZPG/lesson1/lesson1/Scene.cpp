@@ -171,6 +171,20 @@ void Scene::createObjects()
 {
 }
 
+SceneContainer* Scene::getSceneContainer()
+{
+	return this->sceneContainer;
+}
+
+Shader* Scene::getObjectShader()
+{
+	return this->objectShader;
+}
+
+Shader* Scene::getDebugShadowShader()
+{
+	return this->debugShadowShader;
+}
 
 
 void Scene::draw()
@@ -205,8 +219,8 @@ void Scene::draw()
 			//glActiveTexture(GL_TEXTURE2);
 			//glBindTexture(GL_TEXTURE_2D, this->shadowMap->shadowMap);
 
-			this->draw_objects();	//NORMAL RENDER!
-
+			//this->draw_objects();	//NORMAL RENDER!
+			Renderer::render(this);
 
 			//render QUAD
 			/*

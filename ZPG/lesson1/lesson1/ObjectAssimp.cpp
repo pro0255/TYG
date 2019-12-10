@@ -61,6 +61,7 @@ ObjectAssimp::ObjectAssimp(Mesh* mesh, Texture* texture, glm::vec4 color) {
 
 void ObjectAssimp::draw(Shader* shader)
 {
+	shader->use();
 	this->set_shader_properties(shader);
 	this->mesh->draw(shader);
 

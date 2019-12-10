@@ -5,13 +5,20 @@ void Renderer::drawLights()
 {
 }
 
-void Renderer::drawObjects()
+auto Renderer::drawObjects(Scene* scene) -> void
 {
+	for (auto object : scene->getSceneContainer()->objects)
+	{
+		glStencilFunc(GL_ALWAYS, object->id, 0xFF);
+		object->draw(scene->getObjectShader());
+	}
 }
 
-void Renderer::drawSkyBox()
+auto Renderer::drawSkyBox(Scene* scene) -> void
 {
+	scene->getSceneContainer()->skybox->draw();
 }
+
 
 void Renderer::drawShadows()
 {
@@ -25,6 +32,8 @@ void Renderer::draw_object(Shader* shader, ObjectAssimp* object) {
 	object->draw(shader);
 }
 
-void Renderer::draw(Scene* scene)
+void Renderer::render(Scene* scene)
 {
+	drawObjects(scene);
 }
+
