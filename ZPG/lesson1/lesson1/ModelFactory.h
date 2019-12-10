@@ -2,19 +2,19 @@
 #include "Mesh.h"
 #include <map>
 enum class MODEL {
-	BARN,
-	DEER,
-	HORSE,
-	LOG,
-	MOOSE,
-	PIG,
-	ALPINE,
-	CUBE,
-	HOUSE,
-	SKYBOX,
-	PLAIN_UV,
-	LAMP,
-	TERRAIN1
+	barn,
+	deer,
+	horse,
+	log,
+	moose,
+	pig,
+	alpine,
+	cube,
+	house,
+	skybox,
+	plain_uv,
+	lamp,
+	terrain1
 };
 
 
@@ -22,7 +22,6 @@ class ModelFactory
 {
 public:
 	Mesh* getProduct(MODEL type);
-	ModelFactory();
 private:
 	void createModels();
 	map<MODEL, Mesh*> models;

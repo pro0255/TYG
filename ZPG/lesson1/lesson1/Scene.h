@@ -46,8 +46,6 @@ private:
 	void draw_objects();
 	void draw_objects(Shader* new_shader);
 
-	ObjFactory* objFac;
-	ColorFactory* colFac;
 
 	void init();
 public:
@@ -64,8 +62,6 @@ public:
 
 	void draw();
 
-
-	void createFactories();
 	void createPointLights();
 	void createSpotLights();
 	void createDirectionLight();

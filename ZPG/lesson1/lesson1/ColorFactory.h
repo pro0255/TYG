@@ -2,21 +2,20 @@
 #include <GLFW/glfw3.h>
 #include <glm/mat4x4.hpp> // glm::mat4
 enum class COLOR {
-	RED,
-	GREEN,
-	BLUE,
-	WHITE,
-	BLACK,
-	YELLOW,
-	PURPLE,
-	PINK,
-	RANDOM
+	red,
+	green,
+	blue,
+	white,
+	black,
+	yellow,
+	purple,
+	pink,
+	random
 };
 
-class ColorFactory
+static class ColorFactory
 {
 public:
-	glm::vec3 getProduct(COLOR type);
-private:
+	static auto getProduct(COLOR type)->glm::vec3;
 };
 

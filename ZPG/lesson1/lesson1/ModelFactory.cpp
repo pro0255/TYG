@@ -3,28 +3,28 @@
 
 Mesh* ModelFactory::getProduct(MODEL type)
 {
-	return this->models[type];
-}
+	if (this->models.size() < 1)
+	{
+		this->createModels();
+	}
 
-ModelFactory::ModelFactory()
-{
-	this->createModels();
+	return this->models[type];
 }
 
 void ModelFactory::createModels()
 {
-	this->models.insert({ MODEL::ALPINE, new Mesh("./models/Assimp/Farm/Alpine_chalet.obj") });
-	this->models.insert({ MODEL::BARN, new Mesh("./models/Assimp/Farm/barn.obj") });
-	this->models.insert({ MODEL::DEER, new Mesh("./models/Assimp/Farm/deer.obj") });
-	this->models.insert({ MODEL::HORSE, new Mesh("./models/Assimp/Farm/horse.obj") });
-	this->models.insert({ MODEL::LOG, new Mesh("./models/Assimp/Farm/log.obj") });
-	this->models.insert({ MODEL::MOOSE, new Mesh("./models/Assimp/Farm/moose.obj") });
-	this->models.insert({ MODEL::PIG, new Mesh("./models/Assimp/Farm/pig.obj") });
-	this->models.insert({ MODEL::HOUSE, new Mesh("./models/Assimp/house.obj") });
-	this->models.insert({ MODEL::SKYBOX, new Mesh("./models/SkyBox/skybox.obj") });
-	this->models.insert({ MODEL::PLAIN_UV, new Mesh(texture_plain, sizeof(texture_plain), 6) });
-	this->models.insert({ MODEL::LAMP, new Mesh("./models/Assimp/Farm/lamp.obj") });
-	this->models.insert({ MODEL::TERRAIN1, new Mesh("./models/Assimp/Terrain/Terrain1.obj") });
+	this->models.insert({ MODEL::alpine, new Mesh("./models/Assimp/Farm/Alpine_chalet.obj") });
+	this->models.insert({ MODEL::barn, new Mesh("./models/Assimp/Farm/barn.obj") });
+	this->models.insert({ MODEL::deer, new Mesh("./models/Assimp/Farm/deer.obj") });
+	this->models.insert({ MODEL::horse, new Mesh("./models/Assimp/Farm/horse.obj") });
+	this->models.insert({ MODEL::log, new Mesh("./models/Assimp/Farm/log.obj") });
+	this->models.insert({ MODEL::moose, new Mesh("./models/Assimp/Farm/moose.obj") });
+	this->models.insert({ MODEL::pig, new Mesh("./models/Assimp/Farm/pig.obj") });
+	this->models.insert({ MODEL::house, new Mesh("./models/Assimp/house.obj") });
+	this->models.insert({ MODEL::skybox, new Mesh("./models/SkyBox/skybox.obj") });
+	this->models.insert({ MODEL::plain_uv, new Mesh(texture_plain, sizeof(texture_plain), 6) });
+	this->models.insert({ MODEL::lamp, new Mesh("./models/Assimp/Farm/lamp.obj") });
+	this->models.insert({ MODEL::terrain1, new Mesh("./models/Assimp/Terrain/Terrain1.obj") });
 }
 
 

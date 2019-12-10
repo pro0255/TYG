@@ -40,8 +40,6 @@ Scene::Scene(GLFWwindow* window)
 	this->objectShader->subscribeCamera(this->camera);
 	this->camera->registerObserver(this->objectShader);
 
-
-	this->createFactories();
 	//this->createPointLights();
 //	this->createSpotLights();
 	this->createDirectionLight();
@@ -51,7 +49,7 @@ Scene::Scene(GLFWwindow* window)
 
 
 	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
-	auto* next = this->objFac->getProduct(MODEL::HOUSE, TEXTURE::HOUSE);
+	auto* next = ObjFactory::getProduct(MODEL::house, TEXTURE::house);
 	//next->scaleObject(glm::vec3(0.2));
 	//next->translateObject(glm::vec3(20, 20, 20));
 	this->objects.push_back(next);
@@ -62,7 +60,7 @@ Scene::Scene(GLFWwindow* window)
 	//this->objects.push_back(floor);
 
 	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
-		auto* lamp = this->objFac->getProduct(MODEL::SKYBOX, TEXTURE::PIG, COLOR::BLUE);
+		auto* lamp = ObjFactory::getProduct(MODEL::skybox, TEXTURE::pig, COLOR::blue);
 		lamp->translateObject(pointLights[i]->getPosition());
 		lamp->scaleObject(glm::vec3(0.2f));
 		this->objects.push_back(lamp);
@@ -70,7 +68,7 @@ Scene::Scene(GLFWwindow* window)
 
 
 	for (unsigned int i = 0; i < this->spotLights.size(); i++) {
-		auto* lamp = this->objFac->getProduct(MODEL::SKYBOX, TEXTURE::NONE, COLOR::PINK);
+		auto* lamp = ObjFactory::getProduct(MODEL::skybox, TEXTURE::none, COLOR::pink);
 		lamp->translateObject(spotLights[i]->getPosition());
 		lamp->scaleObject(glm::vec3(0.2f));
 		this->objects.push_back(lamp);
@@ -104,8 +102,8 @@ void Scene::draw_objects(Shader* new_shader)
 
 void Scene::createPointLights()
 {
-	this->pointLights.push_back(new PointLight(glm::vec3(10, 10, 10), this->colFac->getProduct(COLOR::YELLOW)));
-	this->pointLights.push_back(new PointLight(glm::vec3(10, 10, -10), this->colFac->getProduct(COLOR::YELLOW)));
+	this->pointLights.push_back(new PointLight(glm::vec3(10, 10, 10), ColorFactory::getProduct(COLOR::yellow)));
+	this->pointLights.push_back(new PointLight(glm::vec3(10, 10, -10), ColorFactory::getProduct(COLOR::yellow)));
 
 	objectShader->use();
 
@@ -119,13 +117,13 @@ void Scene::createSpotLights()
 {
 
 
-	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, -1), glm::vec3(0, 5, 10), this->colFac->getProduct(COLOR::PINK), this->colFac->getProduct(COLOR::RANDOM), this->colFac->getProduct(COLOR::GREEN)));
-	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, 1), glm::vec3(0, 5, 9), this->colFac->getProduct(COLOR::GREEN)));
-	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(1, 0, 0), glm::vec3(0, 5, 8), this->colFac->getProduct(COLOR::GREEN)));
-	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(-1, 0, -1), glm::vec3(0, 5, 7), this->colFac->getProduct(COLOR::GREEN)));
-	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(-0.2, -1.0, -0.3f), glm::vec3(0, 5, 6), this->colFac->getProduct(COLOR::GREEN)));
-	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, -1), glm::vec3(0, 5, 5), this->colFac->getProduct(COLOR::GREEN)));
-	this->spotLights.push_back(new SpotLight(10, 15, glm::vec3(-1, -1, -1), glm::vec3(5, 5, -8), this->colFac->getProduct(COLOR::WHITE)));
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, -1), glm::vec3(0, 5, 10), ColorFactory::getProduct(COLOR::pink), ColorFactory::getProduct(COLOR::random), ColorFactory::getProduct(COLOR::green)));
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, 1), glm::vec3(0, 5, 9), ColorFactory::getProduct(COLOR::green)));
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(1, 0, 0), glm::vec3(0, 5, 8), ColorFactory::getProduct(COLOR::green)));
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(-1, 0, -1), glm::vec3(0, 5, 7), ColorFactory::getProduct(COLOR::green)));
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(-0.2, -1.0, -0.3f), glm::vec3(0, 5, 6), ColorFactory::getProduct(COLOR::green)));
+	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, -1), glm::vec3(0, 5, 5), ColorFactory::getProduct(COLOR::green)));
+	this->spotLights.push_back(new SpotLight(10, 15, glm::vec3(-1, -1, -1), glm::vec3(5, 5, -8), ColorFactory::getProduct(COLOR::white)));
 
 	objectShader->use();
 
@@ -138,7 +136,7 @@ void Scene::createSpotLights()
 void Scene::createDirectionLight()
 {
 	this->flashlight = new FlashLight(12.5, this->camera);
-	this->directionLight = new DirectionLight(glm::vec3(0.01, 0.01, 0.01), this->colFac->getProduct(COLOR::WHITE), glm::vec3(1, 1, 1), glm::vec3(-1, -1, 0));
+	this->directionLight = new DirectionLight(glm::vec3(0.01, 0.01, 0.01), ColorFactory::getProduct(COLOR::white), glm::vec3(1, 1, 1), glm::vec3(-1, -1, 0));
 	this->objectShader->use();
 	this->directionLight->setShaderProperties(this->objectShader);
 }
@@ -180,13 +178,6 @@ Camera* Scene::getCamera()
 
 void Scene::createObjects()
 {
-}
-
-
-void Scene::createFactories()
-{
-	this->colFac = new ColorFactory();
-	this->objFac = new ObjFactory(this->colFac);
 }
 
 
