@@ -17,7 +17,8 @@
 #include "DirectionLight.h"
 #include "ShadowMap.h"
 #include "Renderer.h"
-
+#include "SceneContainer.h"
+#include "SceneFactory.h"
 class Renderer;
 class Scene
 {
@@ -36,6 +37,8 @@ private:
 	vector<PointLight*> pointLights;
 	vector<SpotLight*> spotLights;
 	DirectionLight* directionLight;
+
+	SceneContainer* sceneContainer;
 
 
 

@@ -3,29 +3,20 @@
 #include "models/sphere.h"
 #include "models/suzi_smooth.h"
 
-//TODO:
-//SHADER FUNKCE!
-//zdedit z tridy a program id pak tam zustane a nebude viditelny ven
-//ask old objects
-//texture plain does not have light
-
 
 void Scene::init()
 {
 	this->objectShader = new Shader();
 	this->debugShadowShader = new Shader("./shaders/DebugShadows/vertex_debugShadow.glsl", "./shaders/DebugShadows/fragment_debugShadow.glsl");
-
-
 	this->camera = new Camera();
-
-
-
-
 }
 
 Scene::Scene(GLFWwindow* window)
 {
 	this->window = window;
+
+
+	this->sceneContainer = SceneFactory::getProduct(KEY::farm);
 
 	this->objectShader = new Shader();
 	this->camera = new Camera();
@@ -82,7 +73,7 @@ Scene::Scene(GLFWwindow* window)
 
 void Scene::draw_objects()
 {
-	for (int i = 0; i < this->objects.size(); i++)
+	for (int i = 0; i < this->sceneContainer->objects.size(); i++)
 	{
 		Renderer::draw_object(this->objectShader, this->objects.at(i)); //wtf is happening here this->skybox->objectShader
 	}

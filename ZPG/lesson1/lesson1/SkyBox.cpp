@@ -4,6 +4,12 @@ SkyBox::SkyBox(string prefix, Camera* camera) : ObjectAssimp(new Mesh("./models/
 	this->createShader(camera); this->camera = camera; this->translateObject(this->camera->getEye());
 }
 
+SkyBox::SkyBox(string prefix) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix))
+{
+	this->createShader(nullptr);
+	this->camera = nullptr;
+}
+
 
 void SkyBox::draw()
 {

@@ -7,6 +7,7 @@ class SkyBox : public ObjectAssimp
 {
 public:
 	SkyBox(string prefix, Camera* camera);
+	SkyBox(string prefix);
 	void draw();
 	Shader* shader;
 	Camera* camera;

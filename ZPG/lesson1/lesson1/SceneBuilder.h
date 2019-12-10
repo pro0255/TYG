@@ -1,6 +1,7 @@
 #pragma once
-class SceneBuilder
+#include "SceneContainer.h"
+static class SceneBuilder
 {
-
+	static SceneContainer* createSceneNumberOne();
 };
 

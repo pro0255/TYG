@@ -70,6 +70,12 @@
     <Filter Include="Builder">
       <UniqueIdentifier>{3c9bb375-b6da-46a2-9ad7-5e22b382b683}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Builder\Interface">
+      <UniqueIdentifier>{2eba7a49-06e5-4988-ba44-5a0ac7995d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\SceneFactory">
+      <UniqueIdentifier>{ef7438c6-c5f2-4044-b6ca-04428600ecb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -144,11 +150,17 @@
     <ClCompile Include="ShadowMap.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
-    <ClCompile Include="SceneBuilder.cpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClCompile>
     <ClCompile Include="SceneContainer.cpp">
       <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="IBuilder.cpp">
+      <Filter>Builder\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="FarmSceneBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>Factories\SceneFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,10 +252,16 @@
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
     <ClInclude Include="SceneContainer.h">
-      <Filter>Hlavičkové soubory</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneBuilder.h">
       <Filter>Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="IBuilder.h">
+      <Filter>Builder\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="FarmSceneBuilder.h">
+      <Filter>Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>Factories\SceneFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
