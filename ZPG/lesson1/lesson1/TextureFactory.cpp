@@ -21,4 +21,5 @@ void TextureFactory::createTextures()
 	this->textures.insert({ TEXTURE::MONKEY, new Texture("./textures/monkey.png") });
 	this->textures.insert({ TEXTURE::LAMP, new Texture("./textures/lamp.png") });
 	this->textures.insert({ TEXTURE::PIG, new Texture("./textures/pig.png") });
+	this->textures.insert({ TEXTURE::TERRAIN1, new Texture("./textures/terrain1.png") });
 }

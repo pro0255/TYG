@@ -64,6 +64,9 @@
     <Filter Include="shaders\ShadowMap">
       <UniqueIdentifier>{64350f26-c829-4946-9c0f-79dc1c65de97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders\DebugShadows">
+      <UniqueIdentifier>{c0d2e86d-49c4-47c8-81fc-57b028cf4f87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -268,6 +271,12 @@
     </None>
     <None Include="shaders\ShadowMap\vertex_shadowMap.glsl">
       <Filter>shaders\ShadowMap</Filter>
+    </None>
+    <None Include="shaders\DebugShadows\fragment_debugShadow.glsl">
+      <Filter>shaders\DebugShadows</Filter>
+    </None>
+    <None Include="shaders\DebugShadows\vertex_debugShadow.glsl">
+      <Filter>shaders\DebugShadows</Filter>
     </None>
   </ItemGroup>
 </Project>

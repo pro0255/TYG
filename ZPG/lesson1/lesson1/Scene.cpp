@@ -16,7 +16,7 @@ Scene::Scene(GLFWwindow* window)
 
 	this->shader = new Shader();
 	this->camera = new Camera();
-
+	this->lightTMPShader = new Shader("./shaders/DebugShadows/vertex_debugShadow.glsl", "./shaders/DebugShadows/fragment_debugShadow.glsl");
 
 	//tmps
 	this->shadowMap = new ShadowMap();
@@ -32,18 +32,41 @@ Scene::Scene(GLFWwindow* window)
 	this->createFactories();
 	this->createLights(); //vytvoreni svetel
 	this->drawLights(); //nasetovani svetel
-	this->createPointLights();
-	this->createSpotLights();
+	//this->createPointLights();
+	//this->createSpotLights();
 	this->createDirectionLight();
 
 
 	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
-	this->my_assimp_objects.push_back(this->objFac->getProduct(MODEL::HOUSE, TEXTURE::HOUSE));
+	//this->my_assimp_objects.push_back(this->objFac->getProduct(MODEL::HOUSE, TEXTURE::MONKEY));
+	auto* next = this->objFac->getProduct(MODEL::HOUSE, TEXTURE::HOUSE);
+	next->scaleObject(glm::vec3(0.2));
+	next->translateObject(glm::vec3(20, 20, 20));
+	//this->my_assimp_objects.push_back(next);
+
+
+	ObjectAssimp* floor = this->objFac->getProduct(MODEL::PLAIN_UV, TEXTURE::TERRAIN1);
+	//floor->translateObject(glm::vec3(0, -30, 0));
+	//floor->scaleObject(glm::vec3(3.0f));
+	this->my_assimp_objects.push_back(floor);
+
+
+
+
+
+	//auto floor = new Object(new Model(texture_plain, sizeof(texture_plain)));
+	//floor->scaleObject(glm::vec3(50));
+	//floor->translateObject(glm::vec3(0, -0.2, 0));
+	//floor->rotateObject(90, glm::vec3(0, 0, 1));
+	//this->my_objects.push_back(floor);
+	//floor->translateObject(glm::vec3(0, -10, 0));
+	//floor->scaleObject(glm::vec3(5));
+	//this->my_assimp_objects.push_back(floor);
 
 
 	//Init of lamps to drawable vector object
 	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
-		auto* lamp = this->objFac->getProduct(MODEL::SKYBOX, TEXTURE::NONE, COLOR::BLUE);
+		auto* lamp = this->objFac->getProduct(MODEL::SKYBOX, TEXTURE::PIG, COLOR::BLUE);
 		lamp->translateObject(pointLights[i]->getPosition());
 		lamp->scaleObject(glm::vec3(0.2f));
 		this->my_assimp_objects.push_back(lamp);
@@ -69,6 +92,7 @@ void Scene::draw_objects()
 	{
 		Renderer::draw_object(this->shader, this->my_assimp_objects.at(i)); //wtf is happening here this->skybox->shader
 	}
+	//Renderer::draw_object(this->shader, this->my_objects.at(0));
 }
 
 void Scene::draw_objects(Shader* new_shader)
@@ -77,6 +101,7 @@ void Scene::draw_objects(Shader* new_shader)
 	{
 		Renderer::draw_object(new_shader, this->my_assimp_objects.at(i)); //wtf is happening here this->skybox->shader
 	}
+	//Renderer::draw_object(new_shader, this->my_objects.at(0));
 }
 
 
@@ -96,7 +121,7 @@ void Scene::createPointLights()
 
 void Scene::createSpotLights()
 {
-	this->flashlight = new FlashLight(12.5, this->camera);
+
 
 	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, -1), glm::vec3(0, 5, 10), this->colFac->getProduct(COLOR::PINK), this->colFac->getProduct(COLOR::RANDOM), this->colFac->getProduct(COLOR::GREEN)));
 	this->spotLights.push_back(new SpotLight(10, 40, glm::vec3(0, 0, 1), glm::vec3(0, 5, 9), this->colFac->getProduct(COLOR::GREEN)));
@@ -116,10 +141,46 @@ void Scene::createSpotLights()
 
 void Scene::createDirectionLight()
 {
-	this->directionLight = new DirectionLight(glm::vec3(0.05, 0.05, 0.05), this->colFac->getProduct(COLOR::WHITE), glm::vec3(1, 1, 1), glm::vec3(-0.2, -1.0f, -0.3f));
+	this->flashlight = new FlashLight(12.5, this->camera);
+	this->directionLight = new DirectionLight(glm::vec3(0.5, 0.5, 0.5), this->colFac->getProduct(COLOR::WHITE), glm::vec3(1, 1, 1), glm::vec3(-1, -1, 0));
+	auto* jelen = this->objFac->getProduct(MODEL::DEER, TEXTURE::NONE, COLOR::RANDOM);
+	jelen->translateObject(this->directionLight->direction);
+	jelen->scaleObject(glm::vec3(0.02f));
+	//this->my_assimp_objects.push_back(jelen);
 
 	this->shader->use();
 	this->directionLight->setShaderProperties(this->shader);
+}
+
+void Scene::renderQuad()
+{
+	unsigned int quadVAO = 0;
+	unsigned int quadVBO;
+	if (quadVAO == 0)
+	{
+		float quadVertices[] = {
+			// positions        // texture Coords
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		};
+		// setup plane VAO
+		glGenVertexArrays(1, &quadVAO);
+		glGenBuffers(1, &quadVBO);
+		glBindVertexArray(quadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	}
+	glBindVertexArray(quadVAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
+
+
 }
 
 
@@ -219,38 +280,50 @@ void Scene::draw()
 			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+
+			//RENDER SHADOW MAP
 			this->shadowMap->draw(this->directionLight, this->my_assimp_objects);
 
 
 
-			//reset viewPort
+			//reset viewPort and render normal SCENE
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			int width, height;
 			glfwGetFramebufferSize(this->window, &width, &height);
 			glViewport(0, 0, width, height);
 
-
-			//render normal scene
-
-
-			glViewport(0, 0, width, height);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			this->shader->use();
 			this->camera->processKeyMovement();
 
-
-
-
-
+			//LIGHTS
 			this->flashlight->draw(this->shader);
 			this->shader->sendUniformVec3("viewPos", this->camera->getEye());
 			//this->light->updatePosition(this->shader);
-
-			//this->shader->sendUniformMat4("lightSpaceMatrix", this->shadowMap->lightSpaceMatrix);
+			this->shader->sendUniformMat4("lightSpaceMatrix", this->shadowMap->lightSpaceMatrix);
 			//glActiveTexture(GL_TEXTURE2);
 			//glBindTexture(GL_TEXTURE_2D, this->shadowMap->shadowMap);
-			this->draw_objects();
 
-			this->skybox->draw();
+			this->draw_objects();	//NORMAL RENDER!
+
+
+			//render QUAD
+			/*
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glViewport(0, 0, width, height);
+			glClearColor(0, 0, 0, 1);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			this->lightTMPShader->use();
+			this->lightTMPShader->setUniform1f("near_plane", this->shadowMap->near_plane);
+			this->lightTMPShader->setUniform1f("far_plane", this->shadowMap->far_plane);
+			this->lightTMPShader->setUniform1i("shadowMap", this->shadowMap->shadowMap);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, this->shadowMap->shadowMap);
+			this->renderQuad();
+			*/
+			//render QUAD
+
+			this->skybox->draw(); //SKYBOX !
 			//glClearColor(0.f, 0.0f, 0.3f, 1.0f);
 			glfwPollEvents();
 			glfwSwapBuffers(this->window);

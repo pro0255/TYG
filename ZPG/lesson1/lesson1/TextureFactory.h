@@ -8,7 +8,8 @@ enum class TEXTURE {
 	MONKEY,
 	LAMP,
 	PIG,
-	NONE
+	NONE,
+	TERRAIN1
 };
 
 class TextureFactory

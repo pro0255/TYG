@@ -23,6 +23,8 @@ public:
 	void setShaderProperties(Shader* shader = nullptr);
 	void draw(DirectionLight* sun, vector<ObjectAssimp*> objects);
 	Shader* shader;
+	float near_plane;
+	float far_plane;
 private:
 
 };

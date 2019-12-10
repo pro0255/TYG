@@ -15,7 +15,7 @@ Camera::Camera()
 	this->forwardMovemenet = false;
 	this->backMovement = false;
 	this->shader = nullptr;
-	this->cameraSpeed = 0.4;
+	this->cameraSpeed = 0.5;
 	this->eye = glm::vec3(0.0f, 0.0f, 5.0f);
 	this->target = glm::vec3(0.0f, 0.0f, -1.0f);
 	this->up = glm::vec3(0.0f, 1.0f, 0.0f);

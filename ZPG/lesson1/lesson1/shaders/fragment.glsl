@@ -1,6 +1,6 @@
 #version 330
 
-#define MAX_LIGHTS 10;
+#define MAX_LIGHTS 10
 
 
 struct DirectionLight {
@@ -73,7 +73,7 @@ struct Light {
 in vec3 ex_worldNormal;	//normala pro fragment
 in vec4 ex_worldPosition;	//pozice
 in vec2 _uv;	//uv souradnice pro sparvne texturovani
-
+in vec4 fragPosLightSpace;
 
 
 
@@ -85,16 +85,16 @@ uniform vec4 objectColor; //barva objektu
 uniform vec4 viewPos; //camera
 
 uniform Light flashlight; //FlashLight
-uniform Light lights[10];
+uniform Light lights[MAX_LIGHTS];
 
 uniform int lightsCount;
 
 //LIGHTS
-uniform PointLight pointLights[10];
+uniform PointLight pointLights[MAX_LIGHTS];
 uniform int pointLightsCount;
 
 
-uniform SpotLight spotLights[10];
+uniform SpotLight spotLights[MAX_LIGHTS];
 uniform int spotLightsCount;
 
 uniform DirectionLight directionLight;
@@ -102,6 +102,7 @@ uniform DirectionLight directionLight;
 
 uniform bool hasObjectTexture;
 uniform sampler2D textureUnitId;
+uniform sampler2D shadowMap;
 
 out vec4 frag_colour;
 
@@ -121,6 +122,7 @@ vec4 calcPointLight(PointLight light, vec3 viewDirection, vec4 objColor);
 vec4 sumSpotLight(vec3 viewDirection, vec4 objColor);
 vec4 sumPointLight(vec3 viewDirection, vec4 objColor);
 vec4 sumFlashLight(vec3 viewDirection, vec4 objColor);
+float calcShadow(float dotLightNormal);
 
 
 void main () {
@@ -145,6 +147,7 @@ void main () {
 	totalLight += sumSpotLight(viewDirection, objColor);
 	totalLight += sumFlashLight(viewDirection, objColor);
 	totalLight += calcDirectionLight(directionLight, viewDirection, objColor);
+
 
 	frag_colour = objColor * totalLight;
 };
@@ -214,13 +217,22 @@ vec4 calcFlashLight() {
 
 
 vec4 calcDirectionLight(DirectionLight light, vec3 viewDirection, vec4 objColor) {
+
+
 	vec3 reflectionDirection = reflect(normalize(-light.direction), normalize(ex_worldNormal));
+	float dotLightNormal = dot(normalize(vec3(light.direction)), normalize(ex_worldNormal));
 	float diff = max(dot(ex_worldNormal, normalize(-light.direction)), 0.0);
-	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
-	vec4 ambientPart = light.ambient * objColor;
-	vec4 diffusePart = light.diffuse * diff * objColor;
-	vec4 specularPart = light.specular * spec * objColor;
-	return ambientPart + diffusePart + specularPart;
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 32);
+	vec4 ambientPart = light.ambient;;
+	vec4 diffusePart = light.diffuse * diff;
+	vec4 specularPart = light.specular * spec;
+
+	float shadow = calcShadow(dotLightNormal);
+	//float shadow = 1;
+	vec4 finalLighting = (shadow * (diffusePart + specularPart) + ambientPart) * objColor;
+
+
+	return finalLighting;
 };
 
 vec4 calcSpotLight(SpotLight light, vec3 viewDirection, vec4 objColor) {
@@ -229,7 +241,7 @@ vec4 calcSpotLight(SpotLight light, vec3 viewDirection, vec4 objColor) {
 	float diff = max(dot(normalize(ex_worldNormal), normalize(lightDirection)), 0.0);
 
 	vec3 reflectionDirection = reflect(normalize(-lightDirection), normalize(ex_worldNormal));
-	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 32);
 
 	float dist = length(light.position - ex_worldPosition);
 	float attenuation =  1.0 / (light.constant + light.lienar * dist + light.quadratic * (dist * dist));
@@ -254,7 +266,7 @@ vec4 calcPointLight(PointLight light, vec3 viewDirection, vec4 objColor) {
 	float diff = max(dot(normalize(ex_worldNormal), normalize(lightDirection)), 0.0);
 
 	vec3 reflectionDirection = reflect(normalize(-lightDirection), normalize(ex_worldNormal));
-	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 32);
 
 	float dist = length(light.position - ex_worldPosition);
 	float attenuation =  1.0 / (light.constant + light.lienar * dist + light.quadratic * (dist * dist));
@@ -292,7 +304,7 @@ vec4 sumFlashLight(vec3 viewDirection, vec4 objColor) {
 	float diff = max(dot(normalize(ex_worldNormal), normalize(lightDirection)), 0.0);
 
 	vec3 reflectionDirection = reflect(normalize(-lightDirection), normalize(ex_worldNormal));
-	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 1);
+	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 32);
 
 	float dist = length(flashlight.position - ex_worldPosition);
 	float attenuation =  1.0 / (flashlight.constant + flashlight.linear * dist + flashlight.quadratic * (dist * dist));
@@ -310,3 +322,16 @@ vec4 sumFlashLight(vec3 viewDirection, vec4 objColor) {
 	specularPart *= attenuation * intensity;
 	return (ambientPart + diffusePart + specularPart);
 }
+
+
+float calcShadow(float dotLightNormal) {
+	vec3 pos = fragPosLightSpace.xyz * 0.5 + 0.5;
+	if(pos.z > 1.0) {
+		pos.z = 1.0;
+	}
+	float depth = texture(shadowMap, pos.xy).r;
+	float bias = max(0.05 * (1.0 - dotLightNormal), 0.005);
+	return (depth + bias) < pos.z ? 0.0 : 1.0;
+	//float depth = 0;
+	//return depth < pos.z ? 0.0 : 1.0;
+};

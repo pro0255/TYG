@@ -186,6 +186,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shaders\DebugShadows\fragment_debugShadow.glsl" />
+    <None Include="shaders\DebugShadows\vertex_debugShadow.glsl" />
     <None Include="shaders\fragment.glsl" />
     <None Include="shaders\ShadowMap\fragment_shadowMap.glsl" />
     <None Include="shaders\ShadowMap\vertex_shadowMap.glsl" />

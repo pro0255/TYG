@@ -35,6 +35,7 @@ private:
 
 	Camera* camera;
 	Shader* shader;
+	Shader* lightTMPShader;
 	Light* light;
 
 
@@ -76,5 +77,8 @@ public:
 	void createPointLights();
 	void createSpotLights();
 	void createDirectionLight();
+
+
+	void renderQuad();
 };
 
