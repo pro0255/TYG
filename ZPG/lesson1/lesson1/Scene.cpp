@@ -52,14 +52,14 @@ Scene::Scene(GLFWwindow* window)
 
 	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
 	auto* next = this->objFac->getProduct(MODEL::HOUSE, TEXTURE::HOUSE);
-	next->scaleObject(glm::vec3(0.2));
-	next->translateObject(glm::vec3(20, 20, 20));
+	//next->scaleObject(glm::vec3(0.2));
+	//next->translateObject(glm::vec3(20, 20, 20));
 	this->objects.push_back(next);
 
 
-	ObjectAssimp* floor = new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 8));
+	//ObjectAssimp* floor = new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 8));
 
-	this->objects.push_back(floor);
+	//this->objects.push_back(floor);
 
 	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
 		auto* lamp = this->objFac->getProduct(MODEL::SKYBOX, TEXTURE::PIG, COLOR::BLUE);

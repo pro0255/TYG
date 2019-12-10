@@ -22,19 +22,26 @@ class Renderer;
 class Scene
 {
 private:
-	vector<ObjectAssimp*> objects;
+
 	GLFWwindow* window;
 
 	Camera* camera;
 	Shader* objectShader;
 	Shader* debugShadowShader;
 	ShadowMap* shadowMap;
-	SkyBox* skybox;
 
+
+	SkyBox* skybox;
+	vector<ObjectAssimp*> objects;
 	vector<PointLight*> pointLights;
 	vector<SpotLight*> spotLights;
 	DirectionLight* directionLight;
+
+
+
 	FlashLight* flashlight;
+
+
 
 	void draw_objects();
 	void draw_objects(Shader* new_shader);
