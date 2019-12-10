@@ -102,9 +102,6 @@
     <ClCompile Include="ShaderLoader.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Zdrojové soubory</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
@@ -122,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="ColorFactory.cpp">
       <Filter>Factories\ColorFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="FlashLight.cpp">
-      <Filter>Zdrojové soubory</Filter>
     </ClCompile>
     <ClCompile Include="ModelFactory.cpp">
       <Filter>Factories\ModelFactory</Filter>
@@ -161,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="SceneFactory.cpp">
       <Filter>Factories\SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashLight.cpp">
+      <Filter>Lights</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +197,6 @@
     <ClInclude Include="models\suzi_smooth.h">
       <Filter>models</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Hlavičkové soubory</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
@@ -223,9 +217,6 @@
     </ClInclude>
     <ClInclude Include="ColorFactory.h">
       <Filter>Factories\ColorFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="FlashLight.h">
-      <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
     <ClInclude Include="ModelFactory.h">
       <Filter>Factories\ModelFactory</Filter>
@@ -262,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="SceneFactory.h">
       <Filter>Factories\SceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashLight.h">
+      <Filter>Lights</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

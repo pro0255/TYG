@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseLight.h"
 #include "ObjectAssimp.h"
-class PointLight : BaseLight
+class PointLight : public BaseLight
 {
 public:
 	virtual void render(Shader* shader) override;

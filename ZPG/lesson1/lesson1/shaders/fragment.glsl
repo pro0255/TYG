@@ -143,8 +143,10 @@ void main () {
 	//totalLight += calcFlashLight();
 
 	vec3 viewDirection = vec3(normalize(viewPos - ex_worldPosition));
-	totalLight += sumPointLight(viewDirection, objColor);
-	totalLight += sumSpotLight(viewDirection, objColor);
+	//totalLight += sumPointLight(viewDirection, objColor);
+	sumPointLight(viewDirection, objColor);
+	//totalLight += sumSpotLight(viewDirection, objColor);
+	sumSpotLight(viewDirection, objColor);
 	totalLight += sumFlashLight(viewDirection, objColor);
 	totalLight += calcDirectionLight(directionLight, viewDirection, objColor);
 

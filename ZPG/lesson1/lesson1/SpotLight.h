@@ -1,6 +1,6 @@
 #pragma once
 #include "PointLight.h"
-class SpotLight : PointLight
+class SpotLight : public PointLight
 {
 public:
 	virtual void setShaderProperties(Shader* shader, int index) override;
