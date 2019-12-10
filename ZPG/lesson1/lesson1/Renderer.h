@@ -7,12 +7,13 @@
 class Scene;
 class Renderer
 {
+private:
+	static auto drawLights() -> void;
+	static auto drawObjects() -> void;
+	static auto drawSkyBox() -> void;
+	static auto drawShadows() -> void;
 public:
-	Renderer();
-	~Renderer();
-
-	static void draw_object(Shader* shader, Object* object);
 	static void draw_object(Shader* shader, ObjectAssimp* object);
-	static void draw_scene(Scene* scene);
+	static void draw(Scene* scene);
 };
 

@@ -21,14 +21,15 @@ private:
 
 	Camera* camera;
 	GLuint shaderProgram;
-	bool createShader(const char* vertexPath, const char* fragmentPath);
-	bool createShader();
-	bool isCompileErrors(GLuint shader, string type);
 
 public:
 	Shader(const char* vertexPath, const char* fragmentPath);
 	Shader();
 	~Shader();
+
+
+	static void reset();
+
 	void use();
 	void updateCamera();
 	void subscribeCamera(Camera* camera);

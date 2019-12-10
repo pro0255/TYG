@@ -9,34 +9,9 @@
 
 using namespace std;
 
-
-glm::mat4 M = glm::mat4(1.0f);
-
-glm::mat4 Rotation = glm::rotate(glm::mat4(1.0f), 90.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-
-glm::mat4 Rot = glm::rotate(M, 90.0f, glm::vec3(1.0f, 1.0f, 0.0f));
-glm::mat4 Translate = glm::translate(M, glm::vec3(1.0f, 1.0f, 0.0f));
-glm::mat4 Scale = glm::scale(M, glm::vec3(2.5f));
-
-
-
-float points[] = {
-	0.0f, 0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	-0.5f, -0.5f, 0.0f
-};
-
-
-
 Application* Application::instance = nullptr;
 
-
-Application::~Application()
-{
-	delete instance;
-	instance = nullptr;
-	cout << "Destraction of the object Application runed well." << endl;
-}
+Application::~Application() { delete instance; instance = nullptr; }
 
 
 Application* Application::getInstance()
@@ -54,7 +29,8 @@ Application* Application::getInstance()
 void Application::run()
 {
 	glfwGetCursorPos(this->window->getWindow(), &this->lastX, &this->lastY);
-	Renderer::draw_scene(this->scene);
+	this->scene->draw();
+
 }
 
 void Application::destroyWindow()
@@ -97,23 +73,19 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	if (key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_RELEASE)) {
-		//scene->getCamera()->keyMove(FORWARD);
 		scene->getCamera()->pressMove(FORWARD);
 	}
 	else if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_RELEASE)) {
-		//scene->getCamera()->keyMove(RIGHT);
 		scene->getCamera()->pressMove(RIGHT);
 	}
 	else if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_RELEASE)) {
-		//scene->getCamera()->keyMove(BACK);
 		scene->getCamera()->pressMove(BACK);
 	}
 	else if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_RELEASE)) {
-		//scene->getCamera()->keyMove(LEFT);
 		scene->getCamera()->pressMove(LEFT);
 	}
 	else if (key == GLFW_KEY_T && (action == GLFW_PRESS)) {
-		scene->scaleObject();
+		//scene->scaleObject();
 	}
 	else if (key == GLFW_KEY_C && action == GLFW_PRESS) {
 		glfwSetInputMode(instance->window->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -122,7 +94,6 @@ void Application::key_callback(GLFWwindow* window, int key, int scancode, int ac
 	else if (key == GLFW_KEY_C && action == GLFW_RELEASE) {
 		glfwSetInputMode(instance->window->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
-	//printf("key_callback [%d,%d,%d,%d] \n", key, scancode, action, mods);
 }
 
 void Application::window_focus_callback(GLFWwindow* window, int focused)
@@ -156,7 +127,7 @@ void Application::cursor_callback(GLFWwindow* window, double x, double y)
 void Application::button_callback(GLFWwindow* window, int button, int action, int mode)
 {
 	if (action == GLFW_RELEASE) {
-		instance->scene->selected_Object_Id = -1;
+		instance->scene->selectedObjectId = -1;
 		cout << "released" << endl;
 	}
 
@@ -194,12 +165,14 @@ void Application::button_callback(GLFWwindow* window, int button, int action, in
 		glm::vec4 viewPort = glm::vec4(0, 0, width, height);
 		glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
 
-		instance->scene->selected_Object_Id = index;
+		instance->scene->selectedObjectId = index;
 		printf("unproject [%f, %f, %f]\n", pos.x, pos.y, pos.z);
 
+		/*
 		if (button == 1) {
 			scene->createObject(pos);
 		}
+		*/
 	}
 }
 

@@ -1,6 +1,12 @@
 #include "Window.h"
 
+Window::Window() { this->init(); }
 
+Window::~Window() {}
+
+void Window::getResolution(int* width, int* height) { glfwGetFramebufferSize(this->window, width, height); }
+
+GLFWwindow* Window::getWindow() { return this->window; }
 
 void Window::init()
 {
@@ -8,12 +14,6 @@ void Window::init()
 		fprintf(stderr, "ERROR: could not start GLFW3\n");
 		exit(EXIT_FAILURE);
 	}
-	/*
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//*/
 	this->window = glfwCreateWindow(800, 600, "ZPG_PRO0255", NULL, NULL);
 	if (!this->window)
 	{
@@ -42,25 +42,4 @@ void Window::init()
 	glEnable(GL_TEXTURE_2D);
 
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	//vertex attribute object(VAO)
-	//lib nastavit cesty dll nakopirovat k exe
-}
-
-Window::Window()
-{
-	this->init();
-}
-
-Window::~Window()
-{
-}
-
-void Window::getResolution(int* width, int* height)
-{
-	glfwGetFramebufferSize(this->window, width, height);
-}
-
-GLFWwindow* Window::getWindow()
-{
-	return this->window;
 }

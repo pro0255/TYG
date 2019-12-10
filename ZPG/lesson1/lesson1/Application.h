@@ -3,7 +3,6 @@
 #include "Shader.h"
 #include "Window.h"
 #include "Scene.h"
-#include "Renderer.h"
 #include "MovementEnum.h"
 #pragma once
 
@@ -15,20 +14,14 @@ private:
 	static Application* instance;
 	Window* window;
 	Scene* scene;
-	void setCallbacks();
 	bool firstMouse;
-
 	double lastX;
 	double lastY;
-
-
+	void setCallbacks();
 public:
 	//Constructor and Destructor
 	~Application();
 	static Application* getInstance(); //Singleton
-
-
-
 	//Callbacks
 	void error_callback(int error, const char* description);
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

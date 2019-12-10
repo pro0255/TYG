@@ -9,37 +9,24 @@
 #include <vector>
 
 using namespace std;
-//priste za tridy applikace, renderer, shader, object, model, camera, window, 
-//renderer dostane scenu a tu vyrendruje
+
 class Shader;
-//pohledova a view matice
 class Camera
 {
 
 private:
-	//Shader *m_shader;
-
 	glm::vec3 eye;
 	glm::vec3 target;
 	glm::vec3 up;
 	glm::vec3 right;
-
-
-
 	bool rightMovement;
 	bool forwardMovemenet;
 	bool backMovement;
 	bool leftMovement;
-
-
 	float pitch;
 	float yaw;
 	float zoom;
-
-	float cameraSpeed;
-
-	Shader* shader;
-
+	//float cameraSpeed;
 	vector<Shader*> shaders;
 
 
@@ -54,12 +41,8 @@ public:
 	~Camera();
 
 	void notify();
-	void setShader(Shader* shader);
 	void registerObserver(Shader* shader);
-
-
 	void processKeyMovement();
-
 	void pressMove(Movement type);
 	void mouseMove(float xOffSet, float yOffSet);
 	void scrollMove(float yOffSet);
@@ -70,6 +53,11 @@ public:
 	glm::vec3 getTarget();
 	glm::vec3 getEye();
 	glm::mat4 getCamera();
-	glm::mat4 getProjectionMatrix();
+	glm::mat4 getProjectionMatrix() const;
+
+
+	static const float MOUSE_SENSITIVITY;
+	static const float CAMERA_SPEED;
+
 };
 

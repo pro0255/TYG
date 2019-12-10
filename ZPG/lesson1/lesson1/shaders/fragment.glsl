@@ -221,14 +221,14 @@ vec4 calcDirectionLight(DirectionLight light, vec3 viewDirection, vec4 objColor)
 
 	vec3 reflectionDirection = reflect(normalize(-light.direction), normalize(ex_worldNormal));
 	float dotLightNormal = dot(normalize(vec3(light.direction)), normalize(ex_worldNormal));
-	float diff = max(dot(ex_worldNormal, normalize(-light.direction)), 0.0);
+	float diff = max(dot(normalize(ex_worldNormal), normalize(-light.direction)), 0.0);
 	float spec = pow(max(dot(viewDirection, reflectionDirection), 0.0), 32);
 	vec4 ambientPart = light.ambient;;
 	vec4 diffusePart = light.diffuse * diff;
 	vec4 specularPart = light.specular * spec;
 
-	float shadow = calcShadow(dotLightNormal);
-	//float shadow = 1;
+	//float shadow = calcShadow(dotLightNormal);
+	float shadow = 1;
 	vec4 finalLighting = (shadow * (diffusePart + specularPart) + ambientPart) * objColor;
 
 

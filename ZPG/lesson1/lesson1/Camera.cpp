@@ -1,12 +1,11 @@
 #include "Camera.h"
 
 
+//const float MOUSE_SENSITIVITY = 0.1f;
+const float Camera::MOUSE_SENSITIVITY = 0.1f;
+const float Camera::CAMERA_SPEED = 0.05f;
 
-const float MOUSE_SENSITIVITY = 0.1f;
-
-Camera::~Camera()
-{
-}
+Camera::~Camera() {}
 
 Camera::Camera()
 {
@@ -14,8 +13,7 @@ Camera::Camera()
 	this->rightMovement = false;
 	this->forwardMovemenet = false;
 	this->backMovement = false;
-	this->shader = nullptr;
-	this->cameraSpeed = 0.5;
+	//this->cameraSpeed = 0.5;
 	this->eye = glm::vec3(0.0f, 0.0f, 5.0f);
 	this->target = glm::vec3(0.0f, 0.0f, -1.0f);
 	this->up = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -39,19 +37,15 @@ glm::vec3 Camera::getEye()
 	return this->eye;
 }
 
-glm::mat4 Camera::getCamera()
+auto Camera::getCamera() -> glm::mat4
 {
-	//this->updateVectors();
 	this->viewMatrix = glm::lookAt(this->eye, this->eye + this->target, this->up);
 	return this->viewMatrix;
 }
 
-glm::mat4 Camera::getProjectionMatrix()
-{
-	return this->projectionMatrix;
-}
+auto Camera::getProjectionMatrix() const -> glm::mat4 { return this->projectionMatrix; }
 
-void Camera::updateVectors()
+auto Camera::updateVectors() -> void
 {
 	this->target.x = cos(glm::radians(this->yaw));
 	this->target.z = sin(glm::radians(this->yaw));
@@ -62,57 +56,24 @@ void Camera::updateVectors()
 	this->up = glm::normalize(glm::cross(this->right, this->target));
 }
 
-void Camera::notify()
+auto Camera::notify() -> void
 {
 	this->updateVectors();
 	for (auto _shader : this->shaders) {
 		_shader->updateCamera();
 	}
-
-
-	/*
-	if (this->shader != nullptr) {
-		this->updateVectors();
-		this->shader->updateCamera();
-	}
-	else {
-		cout << "I have on camera NULLPTR !!!";
-	}
-	*/
 }
 
-void Camera::setShader(Shader* shader)
+
+auto Camera::registerObserver(Shader* shader) -> void
 {
-	this->shader = shader;
-	cout << "Setting shader and after i will notify him with my start parameters" << endl;
-	this->notify();
+	this->shaders.push_back(shader); this->notify();
 }
 
-void Camera::registerObserver(Shader* shader)
-{
-	this->shaders.push_back(shader);
-	this->notify();
-}
-
-void Camera::toFront()
-{
-	this->eye += this->target * this->cameraSpeed;
-}
-
-void Camera::toRight()
-{
-	this->eye += this->right * this->cameraSpeed;
-}
-
-void Camera::toLeft()
-{
-	this->eye -= this->right * this->cameraSpeed;
-}
-
-void Camera::toBack()
-{
-	this->eye -= this->target * this->cameraSpeed;
-}
+void Camera::toFront() { this->eye += this->target * Camera::CAMERA_SPEED; }
+void Camera::toRight() { this->eye += this->right * Camera::CAMERA_SPEED; }
+void Camera::toLeft() { this->eye -= this->right * Camera::CAMERA_SPEED; }
+void Camera::toBack() { this->eye -= this->target * Camera::CAMERA_SPEED; }
 
 
 void Camera::processKeyMovement()
@@ -144,8 +105,8 @@ void Camera::pressMove(Movement type)
 
 void Camera::mouseMove(float xOffSet, float yOffSet)
 {
-	xOffSet *= MOUSE_SENSITIVITY;
-	yOffSet *= MOUSE_SENSITIVITY;
+	xOffSet *= Camera::MOUSE_SENSITIVITY;
+	yOffSet *= Camera::MOUSE_SENSITIVITY;
 
 	this->yaw += xOffSet;
 	this->pitch += yOffSet;
@@ -156,12 +117,10 @@ void Camera::mouseMove(float xOffSet, float yOffSet)
 	if (this->pitch < -89.0f) {
 		this->pitch = -89.0f;
 	}
-	//notify();
 }
 
 void Camera::scrollMove(float yOffSet)
 {
-	cout << "Scroll move" << endl;
 	if (zoom >= 1.0f && zoom <= 45.0f) {
 		zoom -= yOffSet;
 	}
@@ -172,6 +131,5 @@ void Camera::scrollMove(float yOffSet)
 		zoom = 45.0f;
 	}
 	this->projectionMatrix = glm::perspective(glm::radians(this->zoom), 4.0f / 3.0f, 0.1f, 100.0f);
-	//notify();
 }
 

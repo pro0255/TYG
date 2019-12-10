@@ -29,7 +29,7 @@ void ObjectAssimp::set_shader_properties(Shader* shader)
 	shader->sendUniformVec4("objectColor", this->color);
 	shader->setUniform1i("hasObjectTexture", this->texture != nullptr); //1-false 0-true
 	if (texture != nullptr) {
-		this->texture->set_shader_properties(shader);
+		this->texture->setShaderProperties(shader);
 	}
 }
 

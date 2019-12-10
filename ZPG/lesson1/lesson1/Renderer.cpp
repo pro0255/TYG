@@ -1,23 +1,20 @@
 #include "Renderer.h"
 
 
-
-Renderer::Renderer()
+void Renderer::drawLights()
 {
 }
 
-
-Renderer::~Renderer()
+void Renderer::drawObjects()
 {
 }
 
-void Renderer::draw_object(Shader* shader, Object* object)
+void Renderer::drawSkyBox()
 {
-	object->set_shader_properties(shader);
-	//shader->use();
-	object->bind();
-	glStencilFunc(GL_ALWAYS, object->getId(), 0xFF);
-	glDrawArrays(GL_TRIANGLES, 0, object->getCountVertex());
+}
+
+void Renderer::drawShadows()
+{
 }
 
 
@@ -28,8 +25,6 @@ void Renderer::draw_object(Shader* shader, ObjectAssimp* object) {
 	object->draw(shader);
 }
 
-void Renderer::draw_scene(Scene* scene)
+void Renderer::draw(Scene* scene)
 {
-	scene->createObjects();
-	scene->draw();
 }

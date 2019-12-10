@@ -47,7 +47,7 @@ void SkyBox::setShaderProperties()
 	shader->sendUniformVec4("objectColor", glm::vec4(1));
 	shader->setUniform1i("hasObjectTexture", this->texture != nullptr); //1-false 0-true
 	if (texture != nullptr) {
-		texture->set_shader_properties(shader);
+		texture->setShaderProperties(shader);
 	}
 }
 

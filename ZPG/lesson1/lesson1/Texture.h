@@ -13,6 +13,6 @@ public:
 	Texture(vector<string> faces);
 	Texture(const char* path);
 	Texture();
-	void set_shader_properties(Shader* shader);
+	void setShaderProperties(Shader* shader);
 };
 
