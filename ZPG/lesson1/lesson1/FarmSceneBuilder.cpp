@@ -10,7 +10,7 @@ DirectionLight* FarmSceneBuilder::createSun()
 {
 	return new DirectionLight(
 		glm::vec3(0.01, 0.01, 0.01),
-		ColorFactory::getProduct(COLOR::white),
+		ColorFactory::getProduct(COLOR::red),
 		glm::vec3(1, 1, 1),
 		glm::vec3(-1, -1, 0)
 	);
@@ -32,8 +32,8 @@ vector<SpotLight*> FarmSceneBuilder::createSpotLights()
 vector<PointLight*> FarmSceneBuilder::createPointLights()
 {
 	vector<PointLight*> pointLights;
-	pointLights.push_back(new PointLight(glm::vec3(10, 10, 10), ColorFactory::getProduct(COLOR::yellow)));
-	pointLights.push_back(new PointLight(glm::vec3(10, 10, -10), ColorFactory::getProduct(COLOR::yellow)));
+	pointLights.push_back(new PointLight(glm::vec3(0, 0, 0), ColorFactory::getProduct(COLOR::blue), ColorFactory::getProduct(COLOR::red)));
+	pointLights.push_back(new PointLight(glm::vec3(10, 10, -10), ColorFactory::getProduct(COLOR::blue), ColorFactory::getProduct(COLOR::random)));
 	return pointLights;
 }
 

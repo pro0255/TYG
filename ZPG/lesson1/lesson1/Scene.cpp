@@ -33,17 +33,18 @@ Scene::Scene(GLFWwindow* window)
 
 	//this->createPointLights();
 //	this->createSpotLights();
-	this->createDirectionLight();
+	//this->createDirectionLight();
 
 
 
 
 
-	this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
-	auto* next = ObjFactory::getProduct(MODEL::house, TEXTURE::house);
+	//this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
+	this->sceneContainer->skybox->setCameraPosition(this->camera);
+	//auto* next = ObjFactory::getProduct(MODEL::house, TEXTURE::house);
 	//next->scaleObject(glm::vec3(0.2));
 	//next->translateObject(glm::vec3(20, 20, 20));
-	this->objects.push_back(next);
+	//this->objects.push_back(next);
 
 
 	//ObjectAssimp* floor = new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 8));
@@ -167,10 +168,6 @@ Camera* Scene::getCamera()
 	return this->camera;
 }
 
-void Scene::createObjects()
-{
-}
-
 SceneContainer* Scene::getSceneContainer()
 {
 	return this->sceneContainer;
@@ -186,9 +183,28 @@ Shader* Scene::getDebugShadowShader()
 	return this->debugShadowShader;
 }
 
+void Scene::preDraw()
+{
+	this->objectShader->use();
+	objectShader->setUniform1i("pointLightsCount", this->sceneContainer->pointLights.size());
+	for (unsigned int i = 0; i < this->sceneContainer->pointLights.size(); i++) {
+		this->sceneContainer->pointLights[i]->setShaderProperties(objectShader, i);
+	}
+	objectShader->setUniform1i("spotLightsCount", this->sceneContainer->spotLights.size());
+	for (unsigned int i = 0; i < this->sceneContainer->spotLights.size(); i++) {
+		this->sceneContainer->spotLights[i]->setShaderProperties(objectShader, i);
+	}
+
+
+	this->flashlight = new FlashLight(12.5, this->camera);
+
+	this->sceneContainer->sun->setShaderProperties(this->objectShader);
+}
+
 
 void Scene::draw()
 {
+	preDraw();
 	try {
 		while (!glfwWindowShouldClose(this->window))
 		{
@@ -237,8 +253,7 @@ void Scene::draw()
 			this->renderQuad();
 			*/
 			//render QUAD
-
-			this->skybox->draw(); //SKYBOX !
+			//this->skybox->draw(); //SKYBOX !
 			//glClearColor(0.f, 0.0f, 0.3f, 1.0f);
 			glfwPollEvents();
 			glfwSwapBuffers(this->window);

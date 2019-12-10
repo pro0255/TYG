@@ -12,6 +12,16 @@ auto Renderer::drawObjects(Scene* scene) -> void
 		glStencilFunc(GL_ALWAYS, object->id, 0xFF);
 		object->draw(scene->getObjectShader());
 	}
+	//Shader::reset();
+}
+
+auto Renderer::drawObjects(vector<ObjectAssimp*> objects, Shader* shader)
+{
+	for (auto object : objects)
+	{
+		glStencilFunc(GL_ALWAYS, object->id, 0xFF);
+		object->draw(shader);
+	}
 }
 
 auto Renderer::drawSkyBox(Scene* scene) -> void
@@ -35,5 +45,6 @@ void Renderer::draw_object(Shader* shader, ObjectAssimp* object) {
 void Renderer::render(Scene* scene)
 {
 	drawObjects(scene);
+	drawSkyBox(scene);
 }
 

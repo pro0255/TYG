@@ -11,6 +11,7 @@ public:
 	void draw();
 	Shader* shader;
 	Camera* camera;
+	void setCameraPosition(Camera* camera);
 private:
 	Texture* load(string prefix);
 	void createShader(Camera* camera);

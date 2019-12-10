@@ -1,7 +1,7 @@
 #include "SkyBox.h"
 
 SkyBox::SkyBox(string prefix, Camera* camera) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix)) {
-	this->createShader(camera); this->camera = camera; this->translateObject(this->camera->getEye());
+	this->createShader(camera); this->camera = camera; //this->translateObject(this->camera->getEye());
 }
 
 SkyBox::SkyBox(string prefix) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.obj"), load(prefix))
@@ -13,6 +13,10 @@ SkyBox::SkyBox(string prefix) : ObjectAssimp(new Mesh("./models/SkyBox/skybox.ob
 
 void SkyBox::draw()
 {
+	if (!this->shader)
+	{
+		this->shader = new Shader("./shaders/SkyBox/skybox_vertex.glsl", "./shaders/SkyBox/skybox_fragment.glsl");
+	}
 	glDepthFunc(GL_LEQUAL);
 	//glDepthMask(GL_FALSE);
 	this->shader->use();
@@ -25,7 +29,12 @@ void SkyBox::draw()
 	//ObjectAssimp::draw(this->shader);
 	glDepthFunc(GL_LESS);
 	//glDepthMask(GL_TRUE);
-	glUseProgram(0);
+	Shader::reset();
+}
+
+void SkyBox::setCameraPosition(Camera* camera)
+{
+	this->camera = camera;
 }
 
 Texture* SkyBox::load(string prefix)

@@ -10,6 +10,7 @@ class Renderer
 private:
 	static auto drawLights() -> void;
 	static auto drawObjects(Scene* scene) -> void;
+	static auto drawObjects(vector<ObjectAssimp*> objects, Shader* shader);
 	static auto drawSkyBox(Scene* scene) -> void;
 	static auto drawShadows() -> void;
 public:

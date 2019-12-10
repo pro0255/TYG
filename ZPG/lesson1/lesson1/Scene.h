@@ -59,14 +59,13 @@ public:
 	Scene(GLFWwindow* window);
 
 	Camera* getCamera();
-	void createObjects();
 
 	SceneContainer* getSceneContainer();
 	Shader* getObjectShader();
 	Shader* getDebugShadowShader();
 
 
-
+	void preDraw();
 	void draw();
 
 	void createPointLights();
