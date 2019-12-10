@@ -31,46 +31,24 @@ private:
 	Shader* debugShadowShader;
 	ShadowMap* shadowMap;
 
-
-	SkyBox* skybox;
-	vector<ObjectAssimp*> objects;
-	vector<PointLight*> pointLights;
-	vector<SpotLight*> spotLights;
-	DirectionLight* directionLight;
-
 	SceneContainer* sceneContainer;
-
-
-
 	FlashLight* flashlight;
-
-
-
-	void draw_objects();
-	void draw_objects(Shader* new_shader);
-
-
+	bool isDrawn;
 	void init();
 public:
-
+	void draw();
+	void renderQuad();
 
 
 	int selectedObjectId;
 	Scene(GLFWwindow* window);
 
 	Camera* getCamera();
-
 	SceneContainer* getSceneContainer();
 	Shader* getObjectShader();
 	Shader* getDebugShadowShader();
-
-
-	void preDraw();
-	void draw();
-
-	void createPointLights();
-	void createSpotLights();
-	void createDirectionLight();
-	void renderQuad();
+	FlashLight* getFlashLight();
+	GLFWwindow* getWindow();
+	bool getDrawn();
 };
 

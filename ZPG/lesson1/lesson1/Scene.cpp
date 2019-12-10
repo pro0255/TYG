@@ -6,91 +6,35 @@
 
 void Scene::init()
 {
-	this->objectShader = new Shader();
-	this->debugShadowShader = new Shader("./shaders/DebugShadows/vertex_debugShadow.glsl", "./shaders/DebugShadows/fragment_debugShadow.glsl");
-	this->camera = new Camera();
-}
-
-Scene::Scene(GLFWwindow* window)
-{
-	this->window = window;
-
-
+	this->isDrawn = false;
 	this->sceneContainer = SceneFactory::getProduct(KEY::farm);
 
 	this->objectShader = new Shader();
-	this->camera = new Camera();
 	this->debugShadowShader = new Shader("./shaders/DebugShadows/vertex_debugShadow.glsl", "./shaders/DebugShadows/fragment_debugShadow.glsl");
 
-	//tmps
+	this->camera = new Camera();
 	this->shadowMap = new ShadowMap();
 	this->shadowMap->setup();
-	//tmps
-
 
 	this->objectShader->subscribeCamera(this->camera);
 	this->camera->registerObserver(this->objectShader);
 
-	//this->createPointLights();
-//	this->createSpotLights();
-	//this->createDirectionLight();
-
-
-
-
-
-	//this->skybox = new SkyBox("./models/SkyBox/Texture/cubemap/", this->camera);
+	this->flashlight = new FlashLight(12.5, this->camera);
 	this->sceneContainer->skybox->setCameraPosition(this->camera);
-	//auto* next = ObjFactory::getProduct(MODEL::house, TEXTURE::house);
-	//next->scaleObject(glm::vec3(0.2));
-	//next->translateObject(glm::vec3(20, 20, 20));
-	//this->objects.push_back(next);
-
-
-	//ObjectAssimp* floor = new ObjectAssimp(new Mesh(texture_plain, sizeof(texture_plain), 8));
-
-	//this->objects.push_back(floor);
-
-	for (unsigned int i = 0; i < this->pointLights.size(); i++) {
-		auto* lamp = ObjFactory::getProduct(MODEL::skybox, TEXTURE::pig, COLOR::blue);
-		lamp->translateObject(pointLights[i]->getPosition());
-		lamp->scaleObject(glm::vec3(0.2f));
-		this->objects.push_back(lamp);
-	}
-
-
-	for (unsigned int i = 0; i < this->spotLights.size(); i++) {
-		auto* lamp = ObjFactory::getProduct(MODEL::skybox, TEXTURE::none, COLOR::pink);
-		lamp->translateObject(spotLights[i]->getPosition());
-		lamp->scaleObject(glm::vec3(0.2f));
-		this->objects.push_back(lamp);
-	}
-
-
-
-
 
 }
 
-void Scene::draw_objects()
+auto Scene::getDrawn() -> bool { return this->isDrawn; }
+
+Scene::Scene(GLFWwindow* window)
 {
-	for (int i = 0; i < this->sceneContainer->objects.size(); i++)
-	{
-		Renderer::draw_object(this->objectShader, this->objects.at(i)); //wtf is happening here this->skybox->objectShader
-	}
-	//Renderer::draw_object(this->objectShader, this->my_objects.at(0));
-}
-
-void Scene::draw_objects(Shader* new_shader)
-{
-	for (int i = 0; i < this->objects.size(); i++)
-	{
-		Renderer::draw_object(new_shader, this->objects.at(i)); //wtf is happening here this->skybox->objectShader
-	}
-	//Renderer::draw_object(new_shader, this->my_objects.at(0));
+	this->window = window;
+	init();
 }
 
 
+
+/*
 
 void Scene::createPointLights()
 {
@@ -133,6 +77,7 @@ void Scene::createDirectionLight()
 	this->directionLight->setShaderProperties(this->objectShader);
 }
 
+*/
 void Scene::renderQuad()
 {
 	unsigned int quadVAO = 0;
@@ -183,6 +128,18 @@ Shader* Scene::getDebugShadowShader()
 	return this->debugShadowShader;
 }
 
+FlashLight* Scene::getFlashLight()
+{
+	return this->flashlight;
+}
+
+GLFWwindow* Scene::getWindow()
+{
+	return this->window;
+}
+
+
+/*
 void Scene::preDraw()
 {
 	this->objectShader->use();
@@ -201,19 +158,19 @@ void Scene::preDraw()
 	this->sceneContainer->sun->setShaderProperties(this->objectShader);
 }
 
-
+*/
 void Scene::draw()
 {
-	preDraw();
 	try {
 		while (!glfwWindowShouldClose(this->window))
 		{
+
 			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 
 			//RENDER SHADOW MAP
-			this->shadowMap->draw(this->directionLight, this->objects);
+			this->shadowMap->draw(this->sceneContainer->sun, this->sceneContainer->objects);
 
 
 
@@ -228,16 +185,16 @@ void Scene::draw()
 			this->camera->processKeyMovement();
 
 			//LIGHTS
-			this->flashlight->draw(this->objectShader);
 			this->objectShader->sendUniformVec3("viewPos", this->camera->getEye());
-			//this->light->updatePosition(this->objectShader);
 			this->objectShader->sendUniformMat4("lightSpaceMatrix", this->shadowMap->lightSpaceMatrix);
+
+
+
 			//glActiveTexture(GL_TEXTURE2);
 			//glBindTexture(GL_TEXTURE_2D, this->shadowMap->shadowMap);
 
-			//this->draw_objects();	//NORMAL RENDER!
 			Renderer::render(this);
-
+			if (!this->isDrawn) this->isDrawn = true;
 			//render QUAD
 			/*
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
