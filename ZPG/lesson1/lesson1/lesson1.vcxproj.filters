@@ -76,6 +76,9 @@
     <Filter Include="Factories\SceneFactory">
       <UniqueIdentifier>{ef7438c6-c5f2-4044-b6ca-04428600ecb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bezier">
+      <UniqueIdentifier>{bc549268-57db-4dc4-ae47-41374f85abd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="FlashLight.cpp">
       <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="BezierCurve.cpp">
+      <Filter>Bezier</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="FlashLight.h">
       <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierCurve.h">
+      <Filter>Bezier</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

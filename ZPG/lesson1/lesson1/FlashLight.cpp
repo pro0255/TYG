@@ -8,7 +8,7 @@ void FlashLight::draw(Shader* shader)
 	this->setShaderProperties(shader);
 }
 
-FlashLight::FlashLight(float cutOff, Camera* camera) : SpotLight(cutOff, 17.5, camera->getTarget(), camera->getEye(), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1, 1, 1), glm::vec3(1, 1, 1))
+FlashLight::FlashLight(float cutOff, Camera* camera) : SpotLight(cutOff, 17.5, camera->getTarget(), camera->getEye(), glm::vec3(0.05, 0.05, 0.05), glm::vec3(1, 1, 0), glm::vec3(1, 1, 1))
 {
 	//this->cutOff = cutOff;
 	this->camera = camera;

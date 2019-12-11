@@ -9,7 +9,10 @@ enum class TEXTURE {
 	lamp,
 	pig,
 	none,
-	terrain1
+	terrain1,
+	deer,
+	moose,
+	house2
 };
 
 class TextureFactory

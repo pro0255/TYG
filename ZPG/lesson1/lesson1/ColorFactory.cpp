@@ -15,3 +15,6 @@ auto ColorFactory::getProduct(COLOR type) -> glm::vec3
 	}
 	getProduct(COLOR::white);
 }
+
+glm::vec3 ColorFactory::getProduct(int r, int g, int b) { return glm::vec3(r / 255.f, g / 255.f, b / 255.f); }
+glm::vec3 ColorFactory::getProduct() { return getProduct(rand() % 256, rand() % 256, rand() % 256); }

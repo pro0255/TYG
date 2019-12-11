@@ -14,7 +14,9 @@ enum class MODEL {
 	skybox,
 	plain_uv,
 	lamp,
-	terrain1
+	terrain1,
+	tree,
+	house2
 };
 
 
